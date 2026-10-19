@@ -1,0 +1,1423 @@
+<!DOCTYPE html><html class="h-full bg-[#F5F5EC]" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FOODLOOP • Operations Command Center (NVIDIA × Nebius)</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "forest": "#123C2D",
+            "forest-dark": "#0B261D",
+            "forest-light": "#1B4F3D",
+            "emerald-accent": "#237653",
+            "lime-accent": "#C8F169",
+            "lime-dark": "#93B737",
+            "pale-sage": "#DDE8D8",
+            "warm-ivory": "#F5F5EC",
+            "card-surface": "rgba(255, 255, 255, 0.88)",
+            "on-surface": "#161D16",
+            "on-surface-subtle": "#576258",
+            "primary": "#123C2D",
+            "secondary": "#237653",
+            "tertiary-fixed": "#C8F169"
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    /* Custom scrollbars and transitions */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #edf2eb;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c3d2bf;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ab395;
+    }
+    .view-container {
+      display: none;
+      animation: fadeIn 0.22s ease-out forwards;
+    }
+    .view-container.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .stepper-line {
+      background: linear-gradient(90deg, #237653 0%, #C8F169 100%);
+    }
+  </style>
+</head>
+<body class="h-full font-sans text-on-surface antialiased bg-[#F5F5EC] selection:bg-lime-accent selection:text-forest overflow-hidden flex">
+<!-- =============================== -->
+<!-- LEFT SIDEBAR: Deep Forest Green -->
+<!-- =============================== -->
+<aside class="w-64 flex-shrink-0 bg-forest text-warm-ivory flex flex-col justify-between border-r border-[#1B4F3D] shadow-2xl z-40 select-none">
+<div class="flex flex-col h-full">
+<!-- Brand & Node Status -->
+<div class="p-5 border-b border-[#1E523E]/70 flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-lime-accent/15 border border-lime-accent/30 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-lime-accent text-2xl font-bold">all_inclusive</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-extrabold text-lg tracking-tight text-white font-sans">FOODLOOP</span>
+<span class="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-lime-accent/20 text-lime-accent border border-lime-accent/30 font-semibold tracking-wider">AI v3.4</span>
+</div>
+<p class="text-xs text-pale-sage/80 font-mono">Zero-Waste Dispatch</p>
+</div>
+</div>
+<!-- System Pill Indicators -->
+<div class="bg-forest-dark/70 rounded-lg p-2.5 border border-[#1f5843] flex flex-col gap-1.5 text-[11px] font-mono">
+<div class="flex items-center justify-between text-emerald-300">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-lime-accent animate-ping"></span>
+              Nemotron-340B
+            </span>
+<span class="text-[10px] text-lime-accent font-semibold">Active</span>
+</div>
+<div class="flex items-center justify-between text-pale-sage/70 text-[10px] pt-1 border-t border-white/5">
+<span class="">Nebius Token Cluster</span>
+<span class="text-white/90">Node 04 • 14ms</span>
+</div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+<div class="text-[10px] uppercase font-mono tracking-wider text-pale-sage/50 px-3 pb-1">Operations Hub</div>
+<button class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 bg-forest-light text-lime-accent font-semibold shadow-sm" id="nav-dashboard" onclick="switchView('dashboard')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="">Dashboard</span>
+</div>
+<span class="text-[10px] font-mono bg-lime-accent text-forest font-bold px-1.5 py-0.5 rounded-full">18</span>
+</button>
+<button class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm text-pale-sage/80 hover:text-white hover:bg-forest-light/60 transition-all duration-150" id="nav-create" onclick="switchView('create')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span class="">Create Donation</span>
+</div>
+<span class="text-[10px] font-mono bg-white/10 text-white/70 px-1.5 py-0.2 rounded font-medium">+New</span>
+</button>
+<button class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm text-pale-sage/80 hover:text-white hover:bg-forest-light/60 transition-all duration-150" id="nav-matching" onclick="switchView('matching')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span class="">Recipient Match</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-lime-accent"></span>
+</button>
+<button class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm text-pale-sage/80 hover:text-white hover:bg-forest-light/60 transition-all duration-150" id="nav-planner" onclick="switchView('planner')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+<span class="">AI Dispatch Planner</span>
+</div>
+<span class="text-[9px] font-mono bg-emerald-accent/50 text-lime-accent px-1.5 py-0.5 rounded uppercase">Simulate</span>
+</button>
+<button class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm text-pale-sage/80 hover:text-white hover:bg-forest-light/60 transition-all duration-150" id="nav-tracking" onclick="switchView('tracking')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+<span class="">Chain of Custody</span>
+</div>
+<span class="text-[10px] font-mono text-emerald-300">Live</span>
+</button>
+<button class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm text-pale-sage/80 hover:text-white hover:bg-forest-light/60 transition-all duration-150" id="nav-analytics" onclick="switchView('analytics')">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+<span class="">Impact Analytics</span>
+</div>
+<span class="material-symbols-outlined text-[15px] text-pale-sage/40">trending_up</span>
+</button>
+</nav>
+<!-- Sidebar Footer / Attribution -->
+<div class="p-4 border-t border-[#1E523E]/70 bg-forest-dark/40 flex flex-col gap-2.5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center text-[13px] font-mono font-bold text-lime-accent">N</div>
+<div class="text-[11px] leading-tight">
+<div class="font-semibold text-white">NVIDIA × Nebius</div>
+<div class="text-[10px] text-pale-sage/60">Global AI Hackathon 2025</div>
+</div>
+</div>
+<div class="text-[10px] font-mono text-pale-sage/50 flex justify-between items-center">
+<span class="">Latency: 28ms</span>
+<span class="text-lime-accent/80 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-lime-accent"></span> SLA 99.9%
+          </span>
+</div>
+</div>
+</div>
+</aside>
+<!-- =============================== -->
+<!-- MAIN WORKSPACE CONTAINER        -->
+<!-- =============================== -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-[#F5F5EC]">
+<!-- TOP APP BAR -->
+<div class="md:hidden flex items-center justify-between px-4 py-3 bg-forest text-warm-ivory border-b border-[#1B4F3D] z-40"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-lime-accent/15 border border-lime-accent/30 flex items-center justify-center"><span class="material-symbols-outlined text-lime-accent text-xl font-bold">all_inclusive</span></div><span class="font-bold text-base tracking-tight text-white">FOODLOOP</span><span class="text-[9px] font-mono bg-lime-accent/20 text-lime-accent px-1.5 py-0.5 rounded font-semibold">v3.4</span></div><div class="flex items-center gap-2"><button class="px-2.5 py-1 text-xs font-mono rounded bg-forest-light text-lime-accent border border-lime-accent/30 flex items-center gap-1" onclick="toggleMobileNav()"><span class="material-symbols-outlined text-sm">menu</span> Hub Views</button></div></div><header class="h-16 flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-forest/10 px-8 flex items-center justify-between z-30">
+<!-- Search & Filters -->
+<div class="flex items-center gap-4 flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-subtle text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-pale-sage/30 hover:bg-pale-sage/50 focus:bg-white text-sm rounded-xl border border-transparent focus:border-emerald-accent/40 focus:ring-2 focus:ring-emerald-accent/20 outline-none transition text-on-surface placeholder:text-on-surface-subtle/70 font-sans" placeholder="Search batch ID, donor, cold-chain sensor, or charity..." type="text" id="globalSearchInput" onkeyup="filterBatchRows(this.value)">
+</div>
+<div class="hidden lg:flex items-center gap-1.5"><button id="filterAllPill" class="px-2.5 py-1 text-xs font-mono font-medium rounded-lg bg-forest text-lime-accent border border-forest cursor-pointer transition" onclick="toggleFilterMode('all')">All Zones</button><button id="filterUrgentPill" class="px-2.5 py-1 text-xs font-mono font-medium rounded-lg bg-emerald-accent/10 text-emerald-accent border border-emerald-accent/20 flex items-center gap-1 hover:bg-emerald-accent/20 cursor-pointer transition" onclick="toggleFilterMode('urgent')"><span class="w-1.5 h-1.5 rounded-full bg-emerald-accent"></span> Urgent Only</button></div>
+</div>
+<!-- Right Actions: Donor Org & Profile -->
+<div class="flex items-center gap-4">
+<!-- Organization Selector -->
+<div class="relative cursor-pointer group bg-pale-sage/40 hover:bg-pale-sage/70 border border-emerald-accent/15 rounded-xl px-3.5 py-1.5 flex items-center gap-2 transition">
+<div class="w-6 h-6 rounded-lg bg-emerald-accent/20 text-emerald-accent flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+</div>
+<div class="text-left">
+<div class="text-xs font-bold text-forest leading-tight">Grand Hyatt Central</div>
+<div class="text-[10px] font-mono text-on-surface-subtle">Commercial Kitchen #02</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-subtle text-[18px]">expand_more</span>
+</div>
+<!-- Quick Post Button -->
+<button class="px-3.5 py-2 rounded-xl bg-forest hover:bg-forest-light text-lime-accent text-xs font-semibold flex items-center gap-1.5 shadow-sm transition active:scale-95" onclick="switchView('create')">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="">Post Donation</span>
+</button>
+<div class="h-6 w-px bg-forest/15"></div>
+<!-- Notifications -->
+<button class="relative p-2 text-on-surface-subtle hover:text-forest hover:bg-pale-sage/40 rounded-xl transition" onclick="triggerToast('Dispatch Alert', 'Courier Van #2 is 4 minutes away from Metro Mart handoff.')">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+</button>
+<!-- User Avatar -->
+<div class="flex items-center gap-2 pl-1">
+<img alt="Ops Director" class="w-8 h-8 rounded-xl object-cover ring-2 ring-forest/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKHCyDDoDrZ-m_ePjO9jiPJK96-bsY4eeim7MTdNyVILVifuju5Rb1dJZlPToCMsE-AZqzyRiRVK4BNFD9Paaqq941wy6c08ooAkyved9PQHazF3wIEW-gFE9A2cAJU60NkR62mcS9IpOnzPUStuyEfbFQPuGbPuq7gOG6z5tZm7vctSnFM88gwk0f6vs9cijCOOx1k8l9mlc_6xsi5MTd1fql8fitGtAhAKQ1UiBvQjOAeXUG3rCi">
+</div>
+</div>
+</header>
+<!-- CONTENT SCROLL AREA -->
+<main class="flex-1 overflow-y-auto px-8 py-6 relative">
+<!-- ============================================ -->
+<!-- VIEW 1: OPERATIONS COMMAND DASHBOARD (DEFAULT) -->
+<!-- ============================================ -->
+<section class="view-container active max-w-7xl mx-auto space-y-6" id="view-dashboard">
+<!-- Welcome Hero Banner -->
+<div class="rounded-2xl p-6 bg-gradient-to-r from-forest via-[#164332] to-forest text-warm-ivory relative overflow-hidden shadow-lg border border-emerald-900/20">
+<div class="absolute -right-8 -bottom-8 w-80 h-80 rounded-full bg-lime-accent/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="space-y-1.5 max-w-2xl">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full bg-lime-accent/20 border border-lime-accent/30 text-lime-accent text-xs font-mono font-medium flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-lime-accent animate-pulse"></span>
+                  Nebius Dispatch Engine • Online
+                </span>
+<span class="text-xs text-pale-sage/70 font-mono">Last synced: 14s ago</span>
+</div>
+<h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight text-white">Operations Command Center</h1>
+<p class="text-sm text-pale-sage/90 font-sans leading-relaxed">
+                Autonomous real-time routing for urban surplus food. Nemotron-340B currently optimizing 18 donor pickups against recipient cooling capacity.
+              </p>
+</div>
+<div class="flex items-center gap-3 flex-shrink-0">
+<button class="px-4 py-2.5 rounded-xl bg-lime-accent text-forest hover:bg-lime-dark hover:text-white font-bold text-sm shadow-md transition flex items-center gap-2" onclick="switchView('planner')">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+<span class="">Open AI Planner</span>
+</button>
+<button class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition flex items-center gap-2" onclick="switchView('create')">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="">Post Surplus Lot</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 4-Metric Command Ribbon -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"><!-- Metric 1: Active Batches -->
+<div class="bg-white/95 rounded-2xl p-5 border border-forest/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+  <div class="flex items-center justify-between text-on-surface-subtle">
+    <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-forest/70">Active Batches</span>
+    <div class="w-8 h-8 rounded-xl bg-forest/5 text-emerald-accent flex items-center justify-center group-hover:bg-emerald-accent group-hover:text-white transition duration-200">
+      <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+    </div>
+  </div>
+  <div class="mt-3 flex items-baseline justify-between">
+    <div class="flex items-baseline gap-2">
+      <span class="text-3xl font-extrabold text-forest tracking-tight">18</span>
+      <span class="text-xs font-mono text-emerald-accent font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[14px]">arrow_upward</span>+3
+      </span>
+    </div>
+    <span class="text-[10px] font-mono font-medium text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">In Route</span>
+  </div>
+  <div class="mt-2 pt-2 border-t border-forest/5 text-xs text-on-surface-subtle flex justify-between items-center">
+    <span class="">450 kg moving</span>
+    <span class="font-mono font-medium text-forest">6 couriers</span>
+  </div>
+</div>
+
+<!-- Metric 2: Food Rescued Today -->
+<div class="bg-white/95 rounded-2xl p-5 border border-forest/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+  <div class="flex items-center justify-between text-on-surface-subtle">
+    <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-forest/70">Food Rescued Today</span>
+    <div class="w-8 h-8 rounded-xl bg-lime-accent/30 text-forest flex items-center justify-center group-hover:bg-lime-accent group-hover:text-forest transition duration-200">
+      <span class="material-symbols-outlined text-[18px]">eco</span>
+    </div>
+  </div>
+  <div class="mt-3 flex items-baseline justify-between">
+    <div class="flex items-baseline gap-1.5">
+      <span class="text-3xl font-extrabold text-forest tracking-tight">4,280</span>
+      <span class="text-sm font-bold text-on-surface-subtle font-mono">kg</span>
+    </div>
+    <span class="text-[10px] font-mono font-semibold text-emerald-800 bg-emerald-50 border border-emerald-accent/20 px-2 py-0.5 rounded-full">94% matched</span>
+  </div>
+  <div class="mt-2 pt-2 border-t border-forest/5 text-xs text-on-surface-subtle flex justify-between items-center">
+    <span class="">~9,100 meals served</span>
+    <span class="font-mono font-semibold text-emerald-accent">9.8 t CO2e</span>
+  </div>
+</div>
+
+<!-- Metric 3: Pending Handoffs -->
+<div class="bg-white/95 rounded-2xl p-5 border border-forest/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+  <div class="flex items-center justify-between text-on-surface-subtle">
+    <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-forest/70">Pending Handoffs</span>
+    <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition duration-200">
+      <span class="material-symbols-outlined text-[18px]">pending_actions</span>
+    </div>
+  </div>
+  <div class="mt-3 flex items-baseline justify-between">
+    <div class="flex items-baseline gap-2">
+      <span class="text-3xl font-extrabold text-forest tracking-tight">6</span>
+      <span class="text-xs font-mono text-amber-800 font-bold uppercase tracking-wider">Urgent</span>
+    </div>
+    <span class="text-[10px] font-mono font-medium text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">Awaiting Pickup</span>
+  </div>
+  <div class="mt-2 pt-2 border-t border-forest/5 text-xs text-on-surface-subtle flex justify-between items-center">
+    <span class="">Avg driver ETA</span>
+    <span class="font-mono font-semibold text-forest">11.4 mins</span>
+  </div>
+</div>
+
+<!-- Metric 4: Food at Risk -->
+<div class="bg-gradient-to-br from-white via-white to-red-50/50 rounded-2xl p-5 border border-red-500/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+  <div class="flex items-center justify-between text-on-surface-subtle">
+    <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-red-700">Food at Risk</span>
+    <div class="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center group-hover:bg-red-600 group-hover:text-white transition duration-200">
+      <span class="material-symbols-outlined text-[18px]">timer</span>
+    </div>
+  </div>
+  <div class="mt-3 flex items-baseline justify-between">
+    <div class="flex items-baseline gap-2">
+      <span class="text-3xl font-extrabold text-red-600 tracking-tight">2 Lots</span>
+    </div>
+    <span class="text-[10px] font-mono bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold">&lt; 90m limit</span>
+  </div>
+  <div class="mt-2 pt-2 border-t border-red-500/10 text-xs text-red-700 flex justify-between items-center">
+    <span class="">Auto-escalation</span>
+    <span class="font-mono font-bold text-red-700">Dispatched</span>
+  </div>
+</div></div>
+<!-- Main Dashboard Split: Urgent Pickups Table & Shelter Capacities -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><!-- LEFT 2 COLS: Urgent Batches Table -->
+<div class="lg:col-span-2 bg-white/95 backdrop-blur-md rounded-2xl border border-forest/10 p-6 shadow-sm flex flex-col justify-between gap-5">
+  <div>
+    <div class="flex items-center justify-between pb-4 border-b border-forest/10">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-forest text-lime-accent flex items-center justify-center shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">dynamic_feed</span>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-forest leading-tight">Live Critical Batches &amp; Dispatch Queue</h2>
+          <p class="text-xs text-on-surface-subtle mt-0.5">Prioritized by Nemotron perishability decay model &amp; cold-chain metrics</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="filterPerishToggle" class="px-3 py-1.5 text-xs font-mono rounded-lg bg-pale-sage/40 hover:bg-pale-sage text-forest transition font-semibold border border-forest/10 active:scale-95 flex items-center gap-1.5" onclick="togglePerishableFilter()">
+          <span class="material-symbols-outlined text-[15px]">filter_list</span>
+          <span id="filterPerishLabel" class="">Filter Perishable</span>
+        </button>
+        <button class="px-3.5 py-1.5 text-xs font-mono rounded-lg bg-emerald-accent text-white hover:bg-forest transition duration-200 font-semibold flex items-center gap-1 shadow-sm active:scale-95" onclick="switchView('matching')">
+          <span class="">View All (18)</span>
+          <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Rows -->
+    <div class="divide-y divide-forest/5 mt-1">
+      <!-- Batch Item 1 -->
+      <div class="py-3.5 px-3 rounded-xl hover:bg-pale-sage/20 transition-all duration-150 flex items-center justify-between gap-4 batch-row group">
+        <div class="flex items-center gap-3.5 min-w-0 flex-1">
+          <div class="w-10 h-10 rounded-xl bg-emerald-accent/10 border border-emerald-accent/20 flex items-center justify-center text-emerald-accent flex-shrink-0 group-hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined text-[22px]">nutrition</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center flex-wrap gap-2">
+              <span class="font-bold text-sm text-forest truncate">Organic Mixed Produce Crates</span>
+              <span class="font-mono text-xs px-2 py-0.5 rounded-md bg-forest/5 text-forest font-semibold border border-forest/10">45 kg</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-700"></span>1h 12m left
+              </span>
+            </div>
+            <div class="text-xs text-on-surface-subtle flex items-center flex-wrap gap-2 mt-1.5">
+              <span class="">Donor: <strong class="text-forest font-semibold">Green Grocers Supermarket</strong></span>
+              <span class="text-forest/30">•</span>
+              <span class="text-emerald-accent font-medium flex items-center gap-1">
+                <span class="material-symbols-outlined text-[13px]">near_me</span> Hope Community Kitchen (1.8 km)
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button class="px-3.5 py-1.5 rounded-lg bg-forest/10 hover:bg-forest text-forest hover:text-white text-xs font-semibold transition active:scale-95 shadow-sm" onclick="switchView('tracking'); triggerToast('Tracking Active', 'Live telemetry feed opened for Organic Mixed Produce.')">
+            Track Handoff
+          </button>
+          <button class="px-3.5 py-1.5 rounded-lg bg-lime-accent text-forest hover:bg-forest hover:text-lime-accent text-xs font-bold transition active:scale-95 shadow-sm flex items-center gap-1" onclick="switchView('planner'); triggerToast('AI Optimizer Initialized', 'Computing real-time detour bypasses for Batch #NEM-891.')">
+            <span class="material-symbols-outlined text-[14px]">alt_route</span> AI Re-route
+          </button>
+        </div>
+      </div>
+
+      <!-- Batch Item 2 -->
+      <div class="py-3.5 px-3 rounded-xl hover:bg-pale-sage/20 transition-all duration-150 flex items-center justify-between gap-4 batch-row group">
+        <div class="flex items-center gap-3.5 min-w-0 flex-1">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 flex-shrink-0 group-hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined text-[22px]">ac_unit</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center flex-wrap gap-2">
+              <span class="font-bold text-sm text-forest truncate">Dairy, Greek Yogurt &amp; Pasteurized Milk</span>
+              <span class="font-mono text-xs px-2 py-0.5 rounded-md bg-forest/5 text-forest font-semibold border border-forest/10">60 L</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-red-100 text-red-700 font-bold animate-pulse flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>48m CRITICAL
+              </span>
+            </div>
+            <div class="text-xs text-on-surface-subtle flex items-center flex-wrap gap-2 mt-1.5">
+              <span class="">Donor: <strong class="text-forest font-semibold">Metro Mart Distribution</strong></span>
+              <span class="text-forest/30">•</span>
+              <span class="text-blue-700 font-mono font-medium flex items-center gap-1">
+                <span class="material-symbols-outlined text-[13px]">device_thermostat</span> Cambro Temp: 3.8°C (Verified Safe)
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button class="px-3.5 py-1.5 rounded-lg bg-forest text-lime-accent hover:bg-forest-light text-xs font-bold transition active:scale-95 shadow-sm flex items-center gap-1.5" onclick="switchView('matching'); triggerToast('Candidate Evaluation', 'Comparing 3 candidate recipient hubs for chilled dairy.')">
+            <span class="material-symbols-outlined text-[15px]">bolt</span> Review AI Match
+          </button>
+        </div>
+      </div>
+
+      <!-- Batch Item 3 -->
+      <div class="py-3.5 px-3 rounded-xl hover:bg-pale-sage/20 transition-all duration-150 flex items-center justify-between gap-4 batch-row group">
+        <div class="flex items-center gap-3.5 min-w-0 flex-1">
+          <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-700 flex-shrink-0 group-hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined text-[22px]">bakery_dining</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center flex-wrap gap-2">
+              <span class="font-bold text-sm text-forest truncate">Artisan Sourdough &amp; Brioche Loaves</span>
+              <span class="font-mono text-xs px-2 py-0.5 rounded-md bg-forest/5 text-forest font-semibold border border-forest/10">85 units</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-700"></span>3h 40m left
+              </span>
+            </div>
+            <div class="text-xs text-on-surface-subtle flex items-center flex-wrap gap-2 mt-1.5">
+              <span class="">Donor: <strong class="text-forest font-semibold">Tartine Corner Cafe</strong></span>
+              <span class="text-forest/30">•</span>
+              <span class="text-forest font-medium flex items-center gap-1">
+                <span class="material-symbols-outlined text-[13px]">local_shipping</span> Courier Volunteer #4 (Sarah C.)
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button class="px-3.5 py-1.5 rounded-lg bg-pale-sage hover:bg-emerald-accent/20 text-forest text-xs font-mono font-semibold transition active:scale-95 border border-forest/10" onclick="switchView('tracking'); triggerToast('OTP Verification', 'Verification PIN 8492 primed for handoff scanner.')">
+            Handoff Pin: 8492
+          </button>
+        </div>
+      </div>
+
+      <!-- Batch Item 4 -->
+      <div class="py-3.5 px-3 rounded-xl hover:bg-pale-sage/10 transition-all duration-150 flex items-center justify-between gap-4 batch-row opacity-80 hover:opacity-100 group">
+        <div class="flex items-center gap-3.5 min-w-0 flex-1">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100/80 flex items-center justify-center text-emerald-800 flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">check_circle</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center flex-wrap gap-2">
+              <span class="font-bold text-sm text-forest truncate line-through">Prepared Gourmet Banquet Bento Boxes</span>
+              <span class="font-mono text-xs px-2 py-0.5 rounded-md bg-forest/5 text-on-surface-subtle font-medium">50 units</span>
+            </div>
+            <div class="text-xs text-emerald-700 font-medium flex items-center gap-1 mt-1.5">
+              <span class="material-symbols-outlined text-[13px]">verified</span> Delivered to St. Jude Haven • Confirmed by Shelter Director
+            </div>
+          </div>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-mono font-bold flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-700"></span> COMPLETED
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Footer -->
+  <div class="pt-4 border-t border-forest/10 flex items-center justify-between">
+    <span class="text-xs text-on-surface-subtle font-mono flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-lime-accent animate-pulse"></span>
+      Dynamic queue recalculated every 30s via Nebius Token Factory
+    </span>
+    <button class="text-xs text-emerald-accent hover:text-forest hover:underline font-semibold flex items-center gap-1.5 py-1 px-2 rounded-lg hover:bg-forest/5 transition active:scale-95" onclick="triggerToast('Telemetry Refreshed', 'Successfully polled 12 Cambro sensors &amp; 4 EV routing nodes.')">
+      <span class="material-symbols-outlined text-[15px]">refresh</span> Force Refresh
+    </button>
+  </div>
+</div>
+
+<!-- RIGHT 1 COL: Recipient Hub Intake Capacity -->
+<div class="bg-white/95 backdrop-blur-md rounded-2xl border border-forest/10 p-6 shadow-sm flex flex-col justify-between space-y-4">
+  <div>
+    <div class="flex items-center justify-between pb-3.5 border-b border-forest/10">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-forest/5 text-forest flex items-center justify-center">
+          <span class="material-symbols-outlined text-[20px]">warehouse</span>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-forest leading-tight">Hub Intake Capacities</h3>
+          <p class="text-xs text-on-surface-subtle mt-0.5">Live IoT fridge &amp; shelving sensors</p>
+        </div>
+      </div>
+      <span class="text-[10px] font-mono text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full font-bold border border-emerald-300">LIVE</span>
+    </div>
+
+    <!-- Capacity Cards -->
+    <div class="space-y-3.5 mt-4">
+      <!-- Shelter 1 -->
+      <div class="p-3.5 rounded-xl bg-pale-sage/20 border border-forest/5 space-y-2 hover:bg-pale-sage/30 transition">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-forest">St. Jude Shelter &amp; Youth Haven</span>
+          <span class="font-mono text-forest font-bold">82% Full</span>
+        </div>
+        <div class="w-full h-2.5 bg-pale-sage/60 rounded-full overflow-hidden p-0.5">
+          <div class="h-full bg-emerald-accent rounded-full transition-all duration-500" style="width: 82%;"></div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-on-surface-subtle font-mono">
+          <span class="">Remaining Cold Cap: <strong class="text-forest">180 kg</strong></span>
+          <span class="text-emerald-700 font-medium">Accepting hot meals</span>
+        </div>
+      </div>
+
+      <!-- Shelter 2 -->
+      <div class="p-3.5 rounded-xl bg-pale-sage/20 border border-forest/5 space-y-2 hover:bg-pale-sage/30 transition">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-forest">Hope Community Kitchen</span>
+          <span class="font-mono text-forest font-bold">45% Full</span>
+        </div>
+        <div class="w-full h-2.5 bg-pale-sage/60 rounded-full overflow-hidden p-0.5">
+          <div class="h-full bg-forest rounded-full transition-all duration-500" style="width: 45%;"></div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-on-surface-subtle font-mono">
+          <span class="">Remaining Cold Cap: <strong class="text-forest">550 kg</strong></span>
+          <span class="text-forest font-semibold">Prime Intake Node</span>
+        </div>
+      </div>
+
+      <!-- Shelter 3 -->
+      <div class="p-3.5 rounded-xl bg-red-50/70 border border-red-200/70 space-y-2 hover:bg-red-50 transition">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-red-900 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[15px] text-red-600">warning</span>
+            City Shelter East Downtown
+          </span>
+          <span class="font-mono text-red-700 font-bold">91% Full</span>
+        </div>
+        <div class="w-full h-2.5 bg-red-100 rounded-full overflow-hidden p-0.5">
+          <div class="h-full bg-red-600 rounded-full transition-all duration-500" style="width: 91%;"></div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-red-700 font-mono">
+          <span class="">Buffer: Only 30 kg left</span>
+          <span class="font-bold bg-red-100 px-1.5 py-0.2 rounded">Diversion Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="w-full py-2.5 rounded-xl bg-forest/5 hover:bg-forest hover:text-white border border-forest/15 text-forest text-xs font-bold transition flex items-center justify-center gap-1.5 active:scale-95 mt-2" onclick="switchView('matching'); triggerToast('Intake Hub Matrix', 'Opened live telemetry view for all 14 recipient facilities.')">
+    <span class="">Inspect All 14 Recipient Hubs</span>
+    <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+  </button>
+</div></div>
+</section>
+<!-- ============================================ -->
+<!-- VIEW 2: CREATE DONATION FORM                 -->
+<!-- ============================================ -->
+<section class="view-container max-w-4xl mx-auto space-y-6" id="view-create">
+<div class="flex items-center justify-between pb-2 border-b border-forest/10">
+<div>
+<h1 class="text-2xl font-extrabold text-forest">Post Surplus Food Donation</h1>
+<p class="text-sm text-on-surface-subtle">Ingest lot into Nemotron-340B matching neural network. Auto-verification in &lt; 2 seconds.</p>
+</div>
+<span class="text-xs font-mono bg-lime-accent/30 text-forest px-3 py-1 rounded-full font-bold border border-lime-accent">Step 1 of 2: Ingestion</span>
+</div>
+<form class="bg-white/90 backdrop-blur-md rounded-2xl border border-forest/10 p-6 md:p-8 shadow-sm space-y-6" id="donationForm" onsubmit="handleDonationSubmit(event)">
+<!-- Category Selector Tiles -->
+<div>
+<label class="block text-xs font-mono uppercase font-bold text-forest mb-2">1. Select Food Category</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<label class="cursor-pointer border-2 border-forest/10 hover:border-emerald-accent rounded-xl p-3.5 flex flex-col items-center text-center transition bg-pale-sage/10 has-[:checked]:border-forest has-[:checked]:bg-emerald-accent/10">
+<input checked="" class="sr-only" name="food_cat" type="radio" value="prepared">
+<span class="material-symbols-outlined text-emerald-accent text-3xl mb-1">lunch_dining</span>
+<span class="text-xs font-bold text-forest">Hot Prepared</span>
+<span class="text-[10px] text-on-surface-subtle">&gt;60°C Cambro</span>
+</label>
+<label class="cursor-pointer border-2 border-forest/10 hover:border-emerald-accent rounded-xl p-3.5 flex flex-col items-center text-center transition bg-pale-sage/10 has-[:checked]:border-forest has-[:checked]:bg-emerald-accent/10">
+<input class="sr-only" name="food_cat" type="radio" value="produce">
+<span class="material-symbols-outlined text-emerald-accent text-3xl mb-1">nutrition</span>
+<span class="text-xs font-bold text-forest">Fresh Produce</span>
+<span class="text-[10px] text-on-surface-subtle">Ambient / Cool</span>
+</label>
+<label class="cursor-pointer border-2 border-forest/10 hover:border-emerald-accent rounded-xl p-3.5 flex flex-col items-center text-center transition bg-pale-sage/10 has-[:checked]:border-forest has-[:checked]:bg-emerald-accent/10">
+<input class="sr-only" name="food_cat" type="radio" value="dairy">
+<span class="material-symbols-outlined text-emerald-accent text-3xl mb-1">ac_unit</span>
+<span class="text-xs font-bold text-forest">Dairy &amp; Chilled</span>
+<span class="text-[10px] text-on-surface-subtle">&lt;4°C Cold Chain</span>
+</label>
+<label class="cursor-pointer border-2 border-forest/10 hover:border-emerald-accent rounded-xl p-3.5 flex flex-col items-center text-center transition bg-pale-sage/10 has-[:checked]:border-forest has-[:checked]:bg-emerald-accent/10">
+<input class="sr-only" name="food_cat" type="radio" value="bakery">
+<span class="material-symbols-outlined text-emerald-accent text-3xl mb-1">bakery_dining</span>
+<span class="text-xs font-bold text-forest">Bakery &amp; Dry</span>
+<span class="text-[10px] text-on-surface-subtle">Shelved Safe</span>
+</label>
+</div>
+</div>
+<!-- Description & Volume -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-mono uppercase font-bold text-forest mb-1.5">Lot Title / Contents</label>
+<input class="w-full px-3.5 py-2.5 rounded-xl border border-forest/15 focus:border-emerald-accent focus:ring-2 focus:ring-emerald-accent/20 text-sm outline-none bg-white" id="lotTitleInput" required="" type="text" value="Braised Chicken Breast with Steamed Quinoa &amp; Roasted Veg">
+</div>
+<div>
+<label class="block text-xs font-mono uppercase font-bold text-forest mb-1.5">Donor Facility / Station</label>
+<input class="w-full px-3.5 py-2.5 rounded-xl border border-forest/15 focus:border-emerald-accent focus:ring-2 focus:ring-emerald-accent/20 text-sm outline-none bg-white" type="text" value="Grand Hyatt Executive Kitchen #2 (Dock B)">
+</div>
+</div>
+<!-- Interactive Portion Slider -->
+<div class="bg-pale-sage/30 rounded-xl p-4 border border-forest/10 space-y-3"><div class="flex items-center justify-between"><span class="text-xs font-mono uppercase font-bold text-forest">Estimated Weight &amp; Portions</span><div class="flex items-center gap-2"><button type="button" onclick="adjustPortions(-5)" class="w-6 h-6 rounded bg-forest/10 hover:bg-forest text-forest hover:text-white font-bold text-xs flex items-center justify-center transition">-</button><span class="text-sm font-bold font-mono text-emerald-accent"><span id="portionVal" class="">38</span> kg (~85 meals)</span><button type="button" onclick="adjustPortions(5)" class="w-6 h-6 rounded bg-forest/10 hover:bg-forest text-forest hover:text-white font-bold text-xs flex items-center justify-center transition">+</button></div></div><input class="w-full accent-emerald-accent h-2 bg-pale-sage rounded-lg cursor-pointer" id="portionRangeInput" max="250" min="5" oninput="setPortionDisplay(this.value)" type="range" value="38"><div class="flex justify-between text-[11px] font-mono text-on-surface-subtle"><span class="">5 kg (Micro-donation)</span><span class="">100 kg (Mid banquet)</span><span class="">250+ kg (Pallet Scale)</span></div></div>
+<!-- Allergen & Dietary Chips -->
+<div>
+<label class="block text-xs font-mono uppercase font-bold text-forest mb-2">Dietary Attributes &amp; Packaging Specs</label>
+<div class="flex flex-wrap gap-2">
+<label class="cursor-pointer px-3 py-1.5 rounded-lg border border-forest/20 text-xs font-medium text-forest hover:bg-forest/5 has-[:checked]:bg-forest has-[:checked]:text-lime-accent has-[:checked]:border-forest transition">
+<input checked="" class="sr-only" type="checkbox"> Halal Certified
+              </label>
+<label class="cursor-pointer px-3 py-1.5 rounded-lg border border-forest/20 text-xs font-medium text-forest hover:bg-forest/5 has-[:checked]:bg-forest has-[:checked]:text-lime-accent has-[:checked]:border-forest transition">
+<input checked="" class="sr-only" type="checkbox"> Gluten-Free Safe
+              </label>
+<label class="cursor-pointer px-3 py-1.5 rounded-lg border border-forest/20 text-xs font-medium text-forest hover:bg-forest/5 has-[:checked]:bg-forest has-[:checked]:text-lime-accent has-[:checked]:border-forest transition">
+<input class="sr-only" type="checkbox"> Nut-Free Facility
+              </label>
+<label class="cursor-pointer px-3 py-1.5 rounded-lg border border-forest/20 text-xs font-medium text-forest hover:bg-forest/5 has-[:checked]:bg-forest has-[:checked]:text-lime-accent has-[:checked]:border-forest transition">
+<input checked="" class="sr-only" type="checkbox"> Insulated Cambro Box Included
+              </label>
+<label class="cursor-pointer px-3 py-1.5 rounded-lg border border-forest/20 text-xs font-medium text-forest hover:bg-forest/5 has-[:checked]:bg-forest has-[:checked]:text-lime-accent has-[:checked]:border-forest transition">
+<input class="sr-only" type="checkbox"> Kosher Supervised
+              </label>
+</div>
+</div>
+<!-- Simulated Photo OCR / Manifest Upload Box -->
+<div class="border-2 border-dashed border-forest/20 hover:border-emerald-accent hover:bg-emerald-50/30 rounded-xl p-5 text-center cursor-pointer transition" onclick="simulateOcrUpload()">
+<span class="material-symbols-outlined text-3xl text-emerald-accent">document_scanner</span>
+<p class="text-xs font-bold text-forest mt-1">NVIDIA Vision OCR Simulator: Drop Kitchen Prep Sheet or Take Photo</p>
+<p class="text-[11px] text-on-surface-subtle font-mono mt-0.5" id="ocrNotice">Click to auto-parse allergen barcodes and HACCP cook timestamps</p>
+</div>
+<!-- Form Actions -->
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-forest/10">
+<button class="px-5 py-2.5 rounded-xl border border-forest/20 hover:bg-forest/5 text-forest font-semibold text-xs transition" onclick="switchView('dashboard')" type="button">Cancel</button>
+<button class="px-6 py-2.5 rounded-xl bg-forest hover:bg-forest-light text-lime-accent font-bold text-xs shadow-md transition flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span class="">Publish Donation &amp; Run Nemotron Match</span>
+</button>
+</div>
+</form>
+</section>
+<!-- ============================================ -->
+<!-- VIEW 3: RECIPIENT MATCHING & RANKING         -->
+<!-- ============================================ -->
+<section class="view-container max-w-7xl mx-auto space-y-6" id="view-matching">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-forest/10">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-2xl font-extrabold text-forest">AI Recipient Matching Matrix</h1>
+<span class="text-xs font-mono bg-lime-accent text-forest px-2 py-0.5 rounded font-bold">Nemotron Multi-Factor</span>
+</div>
+<p class="text-sm text-on-surface-subtle">Evaluating intake demand, transit decay curves, intake shelter refrigeration, and dietary compatibility.</p>
+</div>
+<div class="flex items-center gap-2">
+<select class="text-xs font-mono bg-white border border-forest/15 rounded-xl px-3 py-2 outline-none text-forest">
+<option>Sort: Highest AI Match %</option>
+<option>Sort: Shortest Distance</option>
+<option>Sort: Most Cold Storage Free</option>
+</select>
+<button class="px-4 py-2 bg-emerald-accent hover:bg-forest text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-sm transition" onclick="switchView('planner')">
+<span class="material-symbols-outlined text-[16px]">alt_route</span>
+<span class="">Generate AI Route</span>
+</button>
+</div>
+</div>
+<!-- Lot Header Pill -->
+<div class="bg-forest-dark text-white p-4 rounded-xl flex items-center justify-between text-xs font-mono">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 rounded bg-lime-accent text-forest font-bold">TARGET BATCH #NEM-892</span>
+<span class="">Grand Hyatt Kitchens (Dock B) • <b>38 kg Braised Chicken &amp; Quinoa</b></span>
+</div>
+<span class="text-lime-accent flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-lime-accent"></span> Safe Temp Window: 184 mins remaining
+          </span>
+</div>
+<!-- 3 Ranked Candidate Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Candidate 1: Best Match 98% -->
+<div class="bg-white/95 rounded-2xl border-2 border-emerald-accent p-6 shadow-md relative flex flex-col justify-between">
+<div class="absolute -top-3 right-6 bg-emerald-accent text-lime-accent text-[11px] font-mono font-bold px-3 py-0.5 rounded-full shadow">
+              RECOMMENDED CANDIDATE
+            </div>
+<div>
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold text-forest">Hope Community Kitchen</h3>
+<p class="text-xs text-on-surface-subtle">1.8 miles • 8 mins courier drive</p>
+</div>
+<div class="text-right">
+<div class="text-2xl font-black text-emerald-accent">98%</div>
+<div class="text-[10px] font-mono text-on-surface-subtle uppercase">Match Score</div>
+</div>
+</div>
+<!-- Match metrics -->
+<div class="mt-4 space-y-2.5 pt-4 border-t border-forest/10 text-xs">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Intake Need:</span>
+<span class="font-bold text-forest">Critical (Dinner service in 45m)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Dietary Fit:</span>
+<span class="font-bold text-emerald-accent font-mono">100% Halal / GF Compatible</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Cold Storage Available:</span>
+<span class="font-mono text-forest">550 kg (45% capacity utilized)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">HACCP Equipment:</span>
+<span class="text-forest font-medium">Commercial Hot Holds Available</span>
+</div>
+</div>
+<!-- Rationale Accordion -->
+<div class="mt-4 p-3 bg-pale-sage/30 rounded-xl text-xs text-forest space-y-1">
+<div class="font-bold text-[11px] font-mono text-emerald-accent uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">psychology</span> Nemotron Rationale:
+                </div>
+<p class="text-[11px] leading-relaxed text-on-surface-subtle">
+                  Highest nutritional yield with minimal transit degradation. Hope Kitchen has 70 unassigned dinner guests tonight.
+                </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-forest/10 flex gap-2">
+<button class="w-full py-2.5 rounded-xl bg-forest text-lime-accent hover:bg-forest-light font-bold text-xs transition flex items-center justify-center gap-1.5 shadow" onclick="assignCandidateAndPlan('Hope Community Kitchen')"><span class="">Assign &amp; Plan Route</span><span class="material-symbols-outlined text-[16px]">alt_route</span></button>
+</div>
+</div>
+<!-- Candidate 2: 84% Match -->
+<div class="bg-white/90 rounded-2xl border border-forest/10 p-6 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold text-forest">St. Jude Youth Center</h3>
+<p class="text-xs text-on-surface-subtle">3.4 miles • 16 mins courier drive</p>
+</div>
+<div class="text-right">
+<div class="text-2xl font-black text-forest">84%</div>
+<div class="text-[10px] font-mono text-on-surface-subtle uppercase">Match Score</div>
+</div>
+</div>
+<div class="mt-4 space-y-2.5 pt-4 border-t border-forest/10 text-xs">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Intake Need:</span>
+<span class="font-bold text-forest">Moderate (Evening snack cycle)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Dietary Fit:</span>
+<span class="font-mono text-forest">90% compatible</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Cold Storage Available:</span>
+<span class="font-mono text-amber-700">180 kg left (82% full)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Staff On Site:</span>
+<span class="text-forest">2 Intake Volunteers</span>
+</div>
+</div>
+<div class="mt-4 p-3 bg-pale-sage/20 rounded-xl text-xs space-y-1">
+<div class="font-bold text-[11px] font-mono text-forest uppercase">Trade-off note:</div>
+<p class="text-[11px] text-on-surface-subtle leading-relaxed">
+                  Viable backup, but higher current fridge utilization limits capacity for tomorrow's breakfast batch.
+                </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-forest/10">
+<button class="w-full py-2.5 rounded-xl border border-forest/20 hover:bg-forest/5 text-forest font-semibold text-xs transition" onclick="triggerToast('Standby Designated', 'St. Jude Youth Center marked as secondary failover.')">
+                Assign as Failover Node
+              </button>
+</div>
+</div>
+<!-- Candidate 3: 62% Match -->
+<div class="bg-white/70 rounded-2xl border border-forest/10 p-6 shadow-sm opacity-80 hover:opacity-100 flex flex-col justify-between transition">
+<div>
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-lg font-bold text-forest">Metro Family Shelter</h3>
+<p class="text-xs text-on-surface-subtle">7.1 miles • 29 mins traffic</p>
+</div>
+<div class="text-right">
+<div class="text-2xl font-black text-on-surface-subtle">62%</div>
+<div class="text-[10px] font-mono text-on-surface-subtle uppercase">Match Score</div>
+</div>
+</div>
+<div class="mt-4 space-y-2.5 pt-4 border-t border-forest/10 text-xs">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Intake Need:</span>
+<span class="font-bold text-forest">Low (Saturated from lunch lot)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Dietary Fit:</span>
+<span class="font-mono text-forest">100% compatible</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-subtle">Cold Storage Available:</span>
+<span class="font-mono text-red-600">30 kg left (91% full)</span>
+</div>
+</div>
+<div class="mt-4 p-3 bg-red-50/50 rounded-xl text-xs space-y-1">
+<div class="font-bold text-[11px] font-mono text-red-700 uppercase">Constraint Warning:</div>
+<p class="text-[11px] text-red-700/80 leading-relaxed">
+                  Exceeds recommended 20-minute hot-hold transport window without active Cambro heat boosters.
+                </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-forest/10">
+<button class="w-full py-2.5 rounded-xl bg-forest/5 text-on-surface-subtle text-xs font-semibold cursor-not-allowed" disabled="">
+                Below Optimization Threshold
+              </button>
+</div>
+</div>
+</div>
+</section>
+<!-- ============================================ -->
+<!-- VIEW 4: AI COORDINATION PLANNER (SIGNATURE) -->
+<!-- ============================================ -->
+<section class="view-container max-w-7xl mx-auto space-y-6" id="view-planner">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-forest/10">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-2xl font-extrabold text-forest">AI Coordination Planner</h1>
+<span class="text-xs font-mono bg-lime-accent text-forest px-2.5 py-0.5 rounded font-bold">Nemotron-340B via Nebius</span>
+</div>
+<p class="text-sm text-on-surface-subtle">Multi-agent urban food rescue solver executing sub-second constraint optimization.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-2 rounded-xl bg-lime-accent text-forest hover:bg-lime-dark hover:text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition" onclick="runSimulationStep()">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span class="">Advance Simulation Stepper</span>
+</button>
+</div>
+</div>
+<!-- 6-Stage Interactive Simulation Stepper -->
+<div class="bg-white/95 rounded-2xl border border-forest/10 p-6 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-mono uppercase font-bold text-forest">Pipeline Execution Graph</span>
+<span class="text-xs font-mono text-emerald-accent font-semibold" id="simStepLabel">Step 4 of 6: Multi-Criteria Plan Generation</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-2">
+<!-- Step 1 -->
+<div class="step-node p-3 rounded-xl border border-emerald-accent bg-emerald-50/60 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] font-bold text-emerald-accent">01</span>
+<span class="material-symbols-outlined text-[16px] text-emerald-accent">check_circle</span>
+</div>
+<span class="text-xs font-bold text-forest">Received</span>
+<span class="text-[10px] text-on-surface-subtle font-mono">Lot #892</span>
+</div>
+<!-- Step 2 -->
+<div class="step-node p-3 rounded-xl border border-emerald-accent bg-emerald-50/60 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] font-bold text-emerald-accent">02</span>
+<span class="material-symbols-outlined text-[16px] text-emerald-accent">check_circle</span>
+</div>
+<span class="text-xs font-bold text-forest">Evaluated</span>
+<span class="text-[10px] text-on-surface-subtle font-mono">HACCP pass</span>
+</div>
+<!-- Step 3 -->
+<div class="step-node p-3 rounded-xl border border-emerald-accent bg-emerald-50/60 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] font-bold text-emerald-accent">03</span>
+<span class="material-symbols-outlined text-[16px] text-emerald-accent">check_circle</span>
+</div>
+<span class="text-xs font-bold text-forest">Ranked</span>
+<span class="text-[10px] text-on-surface-subtle font-mono">3 candidates</span>
+</div>
+<!-- Step 4 (Current) -->
+<div class="step-node p-3 rounded-xl border-2 border-forest bg-forest text-warm-ivory flex flex-col gap-1 shadow-md" id="step4Node">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] font-bold text-lime-accent">04</span>
+<span class="w-2 h-2 rounded-full bg-lime-accent animate-ping"></span>
+</div>
+<span class="text-xs font-bold text-white">Planned</span>
+<span class="text-[10px] text-lime-accent font-mono">Optimal EV Route</span>
+</div>
+<!-- Step 5 -->
+<div class="step-node p-3 rounded-xl border border-forest/15 bg-pale-sage/20 flex flex-col gap-1 opacity-60" id="step5Node">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] font-bold text-on-surface-subtle">05</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-subtle">pending</span>
+</div>
+<span class="text-xs font-bold text-forest">Verified</span>
+<span class="text-[10px] text-on-surface-subtle font-mono">Cold-chain safe</span>
+</div>
+<!-- Step 6 -->
+<div class="step-node p-3 rounded-xl border border-forest/15 bg-pale-sage/20 flex flex-col gap-1 opacity-60" id="step6Node">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] font-bold text-on-surface-subtle">06</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-subtle">how_to_reg</span>
+</div>
+<span class="text-xs font-bold text-forest">Approved</span>
+<span class="text-[10px] text-on-surface-subtle font-mono">Human-in-loop</span>
+</div>
+</div>
+</div>
+<!-- Side-by-Side Trade-off Comparison -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Plan A: Recommended -->
+<div class="bg-white/95 rounded-2xl border-2 border-forest p-6 shadow-sm space-y-4 relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-forest text-lime-accent text-xs font-mono font-bold">PLAN OPTION A</span>
+<span class="text-xs font-bold text-forest">Primary AI Synthesis</span>
+</div>
+<span class="text-xs font-mono text-emerald-accent font-bold">Efficiency Score 96.4/100</span>
+</div>
+<div class="p-3.5 rounded-xl bg-pale-sage/20 border border-forest/10 text-xs space-y-1.5 font-mono">
+<div class="text-forest font-bold">Route Trajectory:</div>
+<div class="text-on-surface-subtle">Grand Hyatt Dock B → Courier Van #2 → Hope Community Kitchen</div>
+<div class="text-emerald-700 font-semibold">Total Transit Time: 9 minutes • Est. Arrival: 11:42 AM</div>
+</div>
+<!-- Trade-off specs -->
+<div class="space-y-2 text-xs">
+<div class="flex justify-between py-1 border-b border-forest/5">
+<span class="text-on-surface-subtle">Nutritional Coverage:</span>
+<span class="font-bold text-forest">85 high-protein meals served</span>
+</div>
+<div class="flex justify-between py-1 border-b border-forest/5">
+<span class="text-on-surface-subtle">CO2e Emissions Avoided:</span>
+<span class="font-bold text-emerald-accent font-mono">92.4 kg CO2e</span>
+</div>
+<div class="flex justify-between py-1 border-b border-forest/5">
+<span class="text-on-surface-subtle">Perishability Risk Margin:</span>
+<span class="font-bold text-forest font-mono">Low (&gt;175 mins safety window)</span>
+</div>
+</div>
+<button class="w-full py-3 rounded-xl bg-forest hover:bg-forest-light text-lime-accent font-bold text-sm shadow transition flex items-center justify-center gap-2" onclick="openApprovalModal('Plan A')">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="">Approve Plan A &amp; Dispatch Courier</span>
+</button>
+</div>
+<!-- Plan B: Alternative -->
+<div class="bg-white/90 rounded-2xl border border-forest/15 p-6 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-pale-sage text-forest text-xs font-mono font-bold">PLAN OPTION B</span>
+<span class="text-xs font-bold text-forest">Split Multi-Drop Variant</span>
+</div>
+<span class="text-xs font-mono text-on-surface-subtle font-bold">Efficiency Score 82.1/100</span>
+</div>
+<div class="p-3.5 rounded-xl bg-pale-sage/10 border border-forest/10 text-xs space-y-1.5 font-mono">
+<div class="text-forest font-bold">Route Trajectory:</div>
+<div class="text-on-surface-subtle">Grand Hyatt → Split 50% St. Jude Haven + 50% Hope Kitchen</div>
+<div class="text-amber-800 font-semibold">Total Transit Time: 24 minutes • Est. Arrival: 12:02 PM</div>
+</div>
+<!-- Trade-off specs -->
+<div class="space-y-2 text-xs">
+<div class="flex justify-between py-1 border-b border-forest/5">
+<span class="text-on-surface-subtle">Nutritional Coverage:</span>
+<span class="font-bold text-forest">Balanced across 2 youth shelters</span>
+</div>
+<div class="flex justify-between py-1 border-b border-forest/5">
+<span class="text-on-surface-subtle">CO2e Emissions Avoided:</span>
+<span class="font-bold text-emerald-accent font-mono">88.1 kg CO2e</span>
+</div>
+<div class="flex justify-between py-1 border-b border-forest/5">
+<span class="text-on-surface-subtle">Perishability Risk Margin:</span>
+<span class="font-bold text-amber-700 font-mono">Moderate (Cambro split requires 2 couriers)</span>
+</div>
+</div>
+<button class="w-full py-3 rounded-xl border border-forest/20 hover:bg-forest/5 text-forest font-bold text-sm transition flex items-center justify-center gap-2" onclick="openApprovalModal('Plan B (Split)')">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+<span class="">Select Alternative Plan B</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ============================================ -->
+<!-- VIEW 5: DONATION TRACKING & CHAIN OF CUSTODY -->
+<!-- ============================================ -->
+<section class="view-container max-w-7xl mx-auto space-y-6" id="view-tracking">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-forest/10">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-2xl font-extrabold text-forest">Live Chain of Custody &amp; Handoff</h1>
+<span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">IoT Sensor Stream #CX-99</span>
+</div>
+<p class="text-sm text-on-surface-subtle">Continuous cold-chain temperature, GPS location, and cryptographic custody validation.</p>
+</div>
+<button class="px-3.5 py-2 border border-red-500/30 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-xl flex items-center gap-1 transition mr-2" onclick="triggerToast('Cold Chain Alert Logged', 'Anomaly report filed to dispatcher: Temperature logged within normal tolerance.')"><span class="material-symbols-outlined text-[16px]">report_problem</span><span class="">Report Anomaly</span></button><button class="px-4 py-2 bg-forest hover:bg-forest-light text-lime-accent text-xs font-bold rounded-xl flex items-center gap-1.5 shadow transition" onclick="simulateQrHandoff()">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+<span class="">Simulate Recipient QR Receipt</span>
+</button>
+</div>
+<!-- 5-Stage Custody Stepper -->
+<div class="bg-white/95 rounded-2xl border border-forest/10 p-6 shadow-sm">
+<div class="flex items-center justify-between text-xs font-mono uppercase font-bold text-forest mb-4">
+<span class="">5-Stage Chain of Custody Protocol</span>
+<span class="text-emerald-accent">Stage 4: Out for Final Delivery</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-3"><div onclick="selectCustodyStage(1)" class="cursor-pointer p-3 rounded-xl bg-emerald-50 border border-emerald-300 hover:shadow-sm transition"><div class="flex items-center justify-between text-[11px] font-mono font-bold text-emerald-800"><span class="">01. Ingested</span><span class="material-symbols-outlined text-[16px]">check_circle</span></div><div class="text-xs font-bold text-forest mt-1">10:14 AM</div><div class="text-[10px] text-on-surface-subtle">HACCP Logged</div></div><div onclick="selectCustodyStage(2)" class="cursor-pointer p-3 rounded-xl bg-emerald-50 border border-emerald-300 hover:shadow-sm transition"><div class="flex items-center justify-between text-[11px] font-mono font-bold text-emerald-800"><span class="">02. Sealed</span><span class="material-symbols-outlined text-[16px]">check_circle</span></div><div class="text-xs font-bold text-forest mt-1">10:25 AM</div><div class="text-[10px] text-on-surface-subtle">Cambro Hot Hold</div></div><div onclick="selectCustodyStage(3)" class="cursor-pointer p-3 rounded-xl bg-emerald-50 border border-emerald-300 hover:shadow-sm transition"><div class="flex items-center justify-between text-[11px] font-mono font-bold text-emerald-800"><span class="">03. Picked Up</span><span class="material-symbols-outlined text-[16px]">check_circle</span></div><div class="text-xs font-bold text-forest mt-1">10:38 AM</div><div class="text-[10px] text-on-surface-subtle">Courier Sarah C.</div></div><div onclick="selectCustodyStage(4)" id="custodyStage4Card" class="cursor-pointer p-3 rounded-xl bg-forest text-warm-ivory border border-forest shadow"><div class="flex items-center justify-between text-[11px] font-mono font-bold text-lime-accent"><span class="">04. In Transit</span><span class="w-2 h-2 rounded-full bg-lime-accent animate-ping"></span></div><div class="text-xs font-bold text-white mt-1">Live En Route</div><div class="text-[10px] text-lime-accent font-mono">ETA: 4 mins</div></div><div onclick="selectCustodyStage(5)" id="custodyStage5Card" class="cursor-pointer p-3 rounded-xl bg-pale-sage/20 border border-forest/10 opacity-70 hover:opacity-100 transition"><div class="flex items-center justify-between text-[11px] font-mono font-bold text-on-surface-subtle"><span class="">05. Accepted</span><span class="material-symbols-outlined text-[16px]">pending</span></div><div class="text-xs font-bold text-forest mt-1">Pending Scan</div><div class="text-[10px] text-on-surface-subtle">Hope Kitchen Pin</div></div></div>
+</div>
+<!-- Telemetry & Courier Card Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Telemetry 1: Cambro Sensor -->
+<div class="bg-white/90 rounded-2xl border border-forest/10 p-5 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-mono font-semibold text-on-surface-subtle uppercase">IoT Thermal Core</span>
+<span class="material-symbols-outlined text-emerald-accent">device_thermostat</span>
+</div>
+<div>
+<div class="text-3xl font-black text-forest">64.2°C</div>
+<div class="text-xs font-mono text-emerald-accent font-bold mt-1">Safe Hot Hold Target: &gt;60.0°C</div>
+</div>
+<div class="w-full bg-pale-sage/40 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-accent h-full w-[85%] rounded-full"></div>
+</div>
+<p class="text-[11px] text-on-surface-subtle font-mono">Sensirion SHT35 Sensor • Broadcast 2s ago</p>
+</div>
+<!-- Courier Profile -->
+<div class="bg-white/90 rounded-2xl border border-forest/10 p-5 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-mono font-semibold text-on-surface-subtle uppercase">Assigned Courier</span>
+<span class="material-symbols-outlined text-forest">directions_car</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-forest text-lime-accent flex items-center justify-center font-bold text-sm">SC</div>
+<div>
+<h4 class="text-sm font-bold text-forest">Sarah Chen (Volunteer Driver)</h4>
+<p class="text-xs text-on-surface-subtle font-mono">Rivian EV Van #02 • 4.98 ★</p>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs pt-2 border-t border-forest/5">
+<span class="text-on-surface-subtle">Contact Driver:</span>
+<span class="font-mono text-forest font-bold">+1 (555) 019-4821</span>
+</div>
+</div>
+<!-- Smart Contract / QR Receipt Status -->
+<div class="bg-white/90 rounded-2xl border border-forest/10 p-5 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-mono font-semibold text-on-surface-subtle uppercase">Handoff Verification</span>
+<span class="material-symbols-outlined text-forest">qr_code</span>
+</div>
+<div>
+<div class="text-xs font-bold text-forest">One-Time Handoff Pin: <span class="font-mono text-base text-emerald-accent">#4920</span></div>
+<div class="text-[11px] text-on-surface-subtle mt-0.5">Receiver will verify lot barcode upon dock arrival</div>
+</div>
+<button class="px-3.5 py-2 border border-red-500/30 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-xl flex items-center gap-1 transition mr-2" onclick="triggerToast('Cold Chain Alert Logged', 'Anomaly report filed to dispatcher: Temperature logged within normal tolerance.')"><span class="material-symbols-outlined text-[16px]">report_problem</span><span class="">Report Anomaly</span></button><button class="w-full py-2 rounded-xl bg-forest/5 hover:bg-forest/10 border border-forest/15 text-forest text-xs font-bold transition" onclick="simulateQrHandoff()">
+              Verify QR Code Manually
+            </button>
+</div>
+</div>
+</section>
+<!-- ============================================ -->
+<!-- VIEW 6: IMPACT ANALYTICS                     -->
+<!-- ============================================ -->
+<section class="view-container max-w-7xl mx-auto space-y-6" id="view-analytics">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-forest/10">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-2xl font-extrabold text-forest">Environmental &amp; Social Impact</h1>
+<span class="text-xs font-mono bg-lime-accent text-forest px-2 py-0.5 rounded font-bold">EPA WARM v15 Methodology</span>
+</div>
+<p class="text-sm text-on-surface-subtle">Aggregated divert metrics calculated directly from verified intake receipts.</p>
+</div>
+<!-- Timeframe selector -->
+<div class="inline-flex rounded-xl bg-pale-sage/40 p-1 border border-forest/10"><button id="tf-7" onclick="setAnalyticsTimeframe('7')" class="timeframe-btn px-3 py-1 rounded-lg text-xs font-mono font-medium hover:text-forest transition">7 Days</button><button id="tf-30" onclick="setAnalyticsTimeframe('30')" class="timeframe-btn px-3 py-1 rounded-lg text-xs font-mono font-bold bg-white text-forest shadow-sm">30 Days</button><button id="tf-90" onclick="setAnalyticsTimeframe('90')" class="timeframe-btn px-3 py-1 rounded-lg text-xs font-mono font-medium hover:text-forest transition">90 Days</button><button id="tf-ytd" onclick="setAnalyticsTimeframe('ytd')" class="timeframe-btn px-3 py-1 rounded-lg text-xs font-mono font-medium hover:text-forest transition">YTD</button></div>
+</div>
+<!-- 3 Big Metric Highlights -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white/95 rounded-2xl border border-forest/10 p-6 shadow-sm">
+<div class="text-xs font-mono text-on-surface-subtle uppercase">Surplus Rescued</div>
+<div class="text-4xl font-black text-forest mt-2" id="metricSurplusVal">14,820 <span class="text-lg font-bold text-on-surface-subtle">kg</span></div>
+<div class="text-xs font-mono text-emerald-accent font-semibold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +24.8% vs last month
+            </div>
+</div>
+<div class="bg-white/95 rounded-2xl border border-forest/10 p-6 shadow-sm">
+<div class="text-xs font-mono text-on-surface-subtle uppercase">Nutritious Meals Served</div>
+<div class="text-4xl font-black text-forest mt-2" id="metricMealsVal">31,450</div>
+<div class="text-xs font-mono text-emerald-accent font-semibold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">diversity_1</span> 14 verified shelters supported
+            </div>
+</div>
+<div class="bg-white/95 rounded-2xl border border-forest/10 p-6 shadow-sm">
+<div class="text-xs font-mono text-on-surface-subtle uppercase">GHG Avoidance (CO2e)</div>
+<div class="text-4xl font-black text-emerald-accent mt-2" id="metricGhgVal">35.6 <span class="text-lg font-bold text-on-surface-subtle">tonnes</span></div>
+<div class="text-xs font-mono text-forest font-semibold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">forest</span> Equiv. to 77 barrels of oil saved
+            </div>
+</div>
+</div>
+<!-- Visual Bar Chart / Distribution -->
+<div class="bg-white/95 rounded-2xl border border-forest/10 p-6 shadow-sm space-y-5">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-base font-bold text-forest">Weekly Diversion Trajectory</h3>
+<p class="text-xs text-on-surface-subtle">Kilograms diverted from urban landfills by category</p>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-forest"></span> Prepared Hot</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-accent"></span> Produce</span>
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-lime-accent"></span> Bakery &amp; Dairy</span>
+</div>
+</div>
+<!-- Simulated Weekly Bars -->
+<div class="grid grid-cols-7 gap-4 items-end h-48 pt-6 border-b border-forest/10">
+<!-- Mon -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 60%;">
+<div class="bg-lime-accent h-[20%] w-full"></div>
+<div class="bg-emerald-accent h-[30%] w-full"></div>
+<div class="bg-forest h-[50%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono text-on-surface-subtle">Mon</span>
+</div>
+<!-- Tue -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 75%;">
+<div class="bg-lime-accent h-[25%] w-full"></div>
+<div class="bg-emerald-accent h-[35%] w-full"></div>
+<div class="bg-forest h-[40%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono text-on-surface-subtle">Tue</span>
+</div>
+<!-- Wed -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 50%;">
+<div class="bg-lime-accent h-[15%] w-full"></div>
+<div class="bg-emerald-accent h-[40%] w-full"></div>
+<div class="bg-forest h-[45%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono text-on-surface-subtle">Wed</span>
+</div>
+<!-- Thu -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 85%;">
+<div class="bg-lime-accent h-[20%] w-full"></div>
+<div class="bg-emerald-accent h-[30%] w-full"></div>
+<div class="bg-forest h-[50%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono text-on-surface-subtle">Thu</span>
+</div>
+<!-- Fri -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 98%;">
+<div class="bg-lime-accent h-[30%] w-full"></div>
+<div class="bg-emerald-accent h-[30%] w-full"></div>
+<div class="bg-forest h-[40%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono font-bold text-forest">Fri</span>
+</div>
+<!-- Sat -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 65%;">
+<div class="bg-lime-accent h-[20%] w-full"></div>
+<div class="bg-emerald-accent h-[35%] w-full"></div>
+<div class="bg-forest h-[45%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono text-on-surface-subtle">Sat</span>
+</div>
+<!-- Sun -->
+<div class="flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full max-w-[42px] bg-pale-sage/40 rounded-t-lg flex flex-col justify-end overflow-hidden" style="height: 40%;">
+<div class="bg-lime-accent h-[20%] w-full"></div>
+<div class="bg-emerald-accent h-[30%] w-full"></div>
+<div class="bg-forest h-[50%] w-full"></div>
+</div>
+<span class="text-[11px] font-mono text-on-surface-subtle">Sun</span>
+</div>
+</div>
+<div class="text-[11px] font-mono text-on-surface-subtle flex items-center justify-between">
+<span class="">EPA Landfill Methane Avoidance Factor: 2.41 kg CO2e / kg diverted edible food.</span>
+<span class="text-emerald-accent font-semibold">Audit trail certified #FL-2025-Q1</span>
+</div>
+</div>
+</section>
+<!-- Operational Audit & Hackathon Attribution Footer -->
+<footer class="mt-8 mb-4 p-4 rounded-xl bg-white/70 border border-forest/10 flex flex-col sm:flex-row items-center justify-between text-xs text-on-surface-subtle gap-2">
+<div class="flex items-center gap-2 font-mono">
+<span class="w-2 h-2 rounded-full bg-lime-accent"></span>
+<span class="">NVIDIA Nemotron-340B • Nebius Token Factory cluster • Synthetic urban demo models</span>
+</div>
+<div class="font-mono text-[11px]">FOODLOOP v3.4 Command Center • Real-Time Zero-Waste Operations</div>
+</footer>
+</main>
+</div>
+<!-- ============================================ -->
+<!-- MODAL: APPROVE PLAN CONFIRMATION DIALOG      -->
+<!-- ============================================ -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-forest text-warm-ivory border-t border-[#1B4F3D] z-40 flex items-center justify-around py-2 px-1"><button onclick="switchView('dashboard')" class="flex flex-col items-center text-[10px] text-lime-accent font-mono"><span class="material-symbols-outlined text-[18px]">dashboard</span><span class="">Dash</span></button><button onclick="switchView('create')" class="flex flex-col items-center text-[10px] text-pale-sage/80 hover:text-white font-mono"><span class="material-symbols-outlined text-[18px]">add_circle</span><span class="">Post</span></button><button onclick="switchView('matching')" class="flex flex-col items-center text-[10px] text-pale-sage/80 hover:text-white font-mono"><span class="material-symbols-outlined text-[18px]">hub</span><span class="">Match</span></button><button onclick="switchView('planner')" class="flex flex-col items-center text-[10px] text-pale-sage/80 hover:text-white font-mono"><span class="material-symbols-outlined text-[18px]">psychology</span><span class="">Plan</span></button><button onclick="switchView('tracking')" class="flex flex-col items-center text-[10px] text-pale-sage/80 hover:text-white font-mono"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span class="">Track</span></button><button onclick="switchView('analytics')" class="flex flex-col items-center text-[10px] text-pale-sage/80 hover:text-white font-mono"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="">Impact</span></button></div><div id="mobileDrawer" class="fixed inset-0 bg-forest-dark/80 backdrop-blur-md z-50 hidden flex-col justify-between p-6"><div class="flex items-center justify-between border-b border-[#1E523E] pb-4"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-lime-accent/20 flex items-center justify-center text-lime-accent font-bold"><span class="material-symbols-outlined text-xl">all_inclusive</span></div><span class="font-bold text-white text-lg">FOODLOOP AI</span></div><button onclick="toggleMobileNav()" class="p-2 text-pale-sage hover:text-white"><span class="material-symbols-outlined text-2xl">close</span></button></div><div class="space-y-2 py-4"><button onclick="switchView('dashboard'); toggleMobileNav()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-forest-light text-lime-accent text-sm font-semibold"><span class="material-symbols-outlined">dashboard</span><span class="">Operations Dashboard</span></button><button onclick="switchView('create'); toggleMobileNav()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-pale-sage hover:bg-forest-light text-sm font-semibold"><span class="material-symbols-outlined">add_circle</span><span class="">Create Donation</span></button><button onclick="switchView('matching'); toggleMobileNav()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-pale-sage hover:bg-forest-light text-sm font-semibold"><span class="material-symbols-outlined">hub</span><span class="">Recipient Match</span></button><button onclick="switchView('planner'); toggleMobileNav()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-pale-sage hover:bg-forest-light text-sm font-semibold"><span class="material-symbols-outlined">psychology</span><span class="">AI Dispatch Planner</span></button><button onclick="switchView('tracking'); toggleMobileNav()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-pale-sage hover:bg-forest-light text-sm font-semibold"><span class="material-symbols-outlined">local_shipping</span><span class="">Chain of Custody</span></button><button onclick="switchView('analytics'); toggleMobileNav()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-pale-sage hover:bg-forest-light text-sm font-semibold"><span class="material-symbols-outlined">monitoring</span><span class="">Impact Analytics</span></button></div><div class="pt-4 border-t border-[#1E523E] text-xs font-mono text-pale-sage/60">NVIDIA Nemotron-340B • Nebius Token Factory SLA 99.9%</div></div><div class="fixed inset-0 bg-forest-dark/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4" id="approvalModal">
+<div class="bg-white rounded-2xl border border-forest/20 max-w-md w-full p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-lime-accent/30 text-forest flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-forest">Confirm &amp; Dispatch Courier</h3>
+<p class="text-xs text-on-surface-subtle" id="modalPlanName">Plan A (Hope Community Kitchen)</p>
+</div>
+</div>
+<div class="p-3.5 bg-pale-sage/30 rounded-xl text-xs space-y-1.5 font-mono text-forest">
+<div class="flex justify-between">
+<span class="text-on-surface-subtle">Assigned Courier:</span>
+<b>Sarah Chen (EV Van #02)</b>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-subtle">Pickup Location:</span>
+<span class="">Grand Hyatt Dock B</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-subtle">Recipient ETA:</span>
+<span class="text-emerald-700 font-bold">11:42 AM (9 mins)</span>
+</div>
+</div>
+<p class="text-xs text-on-surface-subtle leading-relaxed">
+        This sends an immediate push notification to the driver and locks the cold storage quota in Hope Kitchen's intake ledger.
+      </p>
+<div class="flex items-center justify-end gap-2 pt-2">
+<button class="px-4 py-2 rounded-xl border border-forest/20 text-forest text-xs font-semibold hover:bg-forest/5" onclick="closeApprovalModal()">Cancel</button>
+<button class="px-5 py-2 rounded-xl bg-forest hover:bg-forest-light text-lime-accent text-xs font-bold shadow" onclick="confirmDispatch()">
+          Confirm Dispatch
+        </button>
+</div>
+</div>
+</div>
+<!-- ============================================ -->
+<!-- FLOATING TOAST NOTIFICATION                  -->
+<!-- ============================================ -->
+<div class="fixed bottom-6 right-6 z-50 hidden bg-forest text-warm-ivory px-4 py-3 rounded-xl shadow-2xl border border-lime-accent/30 flex items-center gap-3 transform transition-all duration-300" id="toast">
+<div class="w-8 h-8 rounded-lg bg-lime-accent/20 text-lime-accent flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+<div>
+<div class="text-xs font-bold text-white" id="toastTitle">Action Completed</div>
+<div class="text-[11px] text-pale-sage font-mono" id="toastMessage">Notification dispatched</div>
+</div>
+<button class="text-pale-sage hover:text-white ml-2" onclick="document.getElementById('toast').classList.add('hidden')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- ============================================ -->
+<!-- INTERACTIVE CLIENT-SIDE ROUTER & LOGIC       -->
+<!-- ============================================ -->
+<script>
+    // Tab / View Switching
+    function switchView(viewName) {
+      // Hide all views
+      const views = document.querySelectorAll('.view-container');
+      views.forEach(v => v.classList.remove('active'));
+
+      // Deactivate all nav buttons
+      const navBtns = document.querySelectorAll('.nav-btn');
+      navBtns.forEach(btn => {
+        btn.classList.remove('bg-forest-light', 'text-lime-accent', 'font-semibold', 'shadow-sm');
+        btn.classList.add('text-pale-sage/80');
+      });
+
+      // Activate target view
+      const targetView = document.getElementById('view-' + viewName);
+      if (targetView) {
+        targetView.classList.add('active');
+      }
+
+      // Activate corresponding nav button
+      const activeNav = document.getElementById('nav-' + viewName);
+      if (activeNav) {
+        activeNav.classList.add('bg-forest-light', 'text-lime-accent', 'font-semibold', 'shadow-sm');
+        activeNav.classList.remove('text-pale-sage/80');
+      }
+    }
+
+    // Toast Generator
+    function triggerToast(title, message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastTitle').innerText = title;
+      document.getElementById('toastMessage').innerText = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4200);
+    }
+
+    // OCR Simulator
+    function simulateOcrUpload() {
+      const label = document.getElementById('ocrNotice');
+      label.innerText = 'Scanning manifest via Nebius Vision model... Done! Extracted: 38kg, 14:00 expiration, zero tree nuts.';
+      label.className = 'text-[11px] text-emerald-accent font-mono font-bold mt-0.5 animate-pulse';
+      triggerToast('OCR Extracted', 'Kitchen manifest verified with 99.4% confidence.');
+    }
+
+    // Handle Donation Form Submission
+    function handleDonationSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('lotTitleInput').value || 'Surplus Batch';
+      triggerToast('Donation Published!', `Batch "${title}" registered. Nemotron matching initiated.`);
+      // Route automatically to matching view
+      setTimeout(() => {
+        switchView('matching');
+      }, 700);
+    }
+
+    // Modal Operations
+    function openApprovalModal(planName) {
+      document.getElementById('modalPlanName').innerText = planName;
+      const modal = document.getElementById('approvalModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeApprovalModal() {
+      const modal = document.getElementById('approvalModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function confirmDispatch() {
+      closeApprovalModal();
+      triggerToast('Dispatch Confirmed!', 'Courier Sarah Chen dispatched. Telemetry handoff stream active.');
+      setTimeout(() => {
+        switchView('tracking');
+      }, 600);
+    }
+
+    // Simulation Stepper in AI Planner
+    let currentSimStep = 4;
+    function runSimulationStep() {
+      currentSimStep = currentSimStep >= 6 ? 1 : currentSimStep + 1;
+      const stepLabel = document.getElementById('simStepLabel');
+      
+      const step4 = document.getElementById('step4Node');
+      const step5 = document.getElementById('step5Node');
+      const step6 = document.getElementById('step6Node');
+
+      if (currentSimStep === 5) {
+        stepLabel.innerText = 'Step 5 of 6: Temperature & Constraints Verification';
+        step5.className = 'step-node p-3 rounded-xl border-2 border-forest bg-forest text-warm-ivory flex flex-col gap-1 shadow-md';
+        step4.className = 'step-node p-3 rounded-xl border border-emerald-accent bg-emerald-50/60 flex flex-col gap-1';
+        triggerToast('Constraints Verified', 'Cambro temperature hold safety verified (>60°C for 3.5 hrs).');
+      } else if (currentSimStep === 6) {
+        stepLabel.innerText = 'Step 6 of 6: Human Supervisor Sign-off Required';
+        step6.className = 'step-node p-3 rounded-xl border-2 border-lime-accent bg-forest text-warm-ivory flex flex-col gap-1 shadow-md';
+        step5.className = 'step-node p-3 rounded-xl border border-emerald-accent bg-emerald-50/60 flex flex-col gap-1';
+        triggerToast('Ready for Approval', 'Plan A awaits one-click authorization.');
+      } else {
+        stepLabel.innerText = 'Step 4 of 6: Multi-Criteria Plan Generation';
+        step4.className = 'step-node p-3 rounded-xl border-2 border-forest bg-forest text-warm-ivory flex flex-col gap-1 shadow-md';
+        step5.className = 'step-node p-3 rounded-xl border border-forest/15 bg-pale-sage/20 flex flex-col gap-1 opacity-60';
+        step6.className = 'step-node p-3 rounded-xl border border-forest/15 bg-pale-sage/20 flex flex-col gap-1 opacity-60';
+        triggerToast('Cycle Reset', 'Nemotron model re-evaluating baseline.');
+      }
+    }
+
+    // Simulate QR code recipient handoff
+    function simulateQrHandoff() {
+      triggerToast('Handoff Verified!', 'Hope Community Kitchen scanned QR #4920. Custody transfer cryptographically signed.');
+    }
+  </script>
+
+
+<script>
+  // Filter Mode Interactive Handler for top pill buttons
+  let currentFilterMode = 'all';
+  function toggleFilterMode(mode) {
+    currentFilterMode = mode;
+    const pillAll = document.getElementById('filterAllPill');
+    const pillUrgent = document.getElementById('filterUrgentPill');
+    const rows = document.querySelectorAll('.batch-row');
+
+    if (mode === 'urgent') {
+      if (pillUrgent) {
+        pillUrgent.className = 'px-3 py-1 text-xs font-mono font-bold rounded-lg bg-forest text-lime-accent border border-forest cursor-pointer transition shadow-sm';
+      }
+      if (pillAll) {
+        pillAll.className = 'px-3 py-1 text-xs font-mono font-medium rounded-lg bg-forest/10 text-forest border border-forest/15 hover:bg-forest/20 cursor-pointer transition';
+      }
+      rows.forEach(r => {
+        if (r.innerText.includes('CRITICAL') || r.innerText.includes('1h 12m')) {
+          r.style.display = 'flex';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+      triggerToast('Filter Applied', 'Showing 2 urgent batches requiring sub-90m dispatch.');
+    } else {
+      if (pillAll) {
+        pillAll.className = 'px-3 py-1 text-xs font-mono font-bold rounded-lg bg-forest text-lime-accent border border-forest cursor-pointer transition shadow-sm';
+      }
+      if (pillUrgent) {
+        pillUrgent.className = 'px-3 py-1 text-xs font-mono font-medium rounded-lg bg-forest/10 text-forest border border-forest/15 hover:bg-forest/20 cursor-pointer transition';
+      }
+      rows.forEach(r => r.style.display = 'flex');
+      triggerToast('All Zones Displayed', 'Showing all 18 active urban rescue lots.');
+    }
+  }
+
+  // Filter Perishable toggle in queue table
+  let isPerishableOnly = false;
+  function togglePerishableFilter() {
+    isPerishableOnly = !isPerishableOnly;
+    const btn = document.getElementById('filterPerishToggle');
+    const label = document.getElementById('filterPerishLabel');
+    const rows = document.querySelectorAll('.batch-row');
+    if (isPerishableOnly) {
+      if (btn) btn.className = 'px-3 py-1.5 text-xs font-mono rounded-lg bg-forest text-lime-accent transition font-bold border border-forest shadow-sm active:scale-95 flex items-center gap-1.5';
+      if (label) label.innerText = 'Showing Perishable';
+      rows.forEach(r => {
+        if (r.innerText.includes('Produce') || r.innerText.includes('Dairy')) {
+          r.style.display = 'flex';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+      triggerToast('Perishable Filter', 'Filtering for items requiring thermal Cambro holds.');
+    } else {
+      if (btn) btn.className = 'px-3 py-1.5 text-xs font-mono rounded-lg bg-pale-sage/40 hover:bg-pale-sage text-forest transition font-semibold border border-forest/10 active:scale-95 flex items-center gap-1.5';
+      if (label) label.innerText = 'Filter Perishable';
+      rows.forEach(r => r.style.display = 'flex');
+      triggerToast('Filter Cleared', 'Displaying full dispatch queue.');
+    }
+  }
+</script></body></html>

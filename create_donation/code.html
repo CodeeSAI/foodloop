@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary-fixed-dim": "#8bd6ac", "error-container": "#ffdad6", "surface-dim": "#d4ddd0", "inverse-primary": "#a6d0bb", "surface-container": "#e8f0e4", "surface-container-highest": "#dce5d9", "on-secondary-fixed-variant": "#005234", "on-primary-container": "#7fa894", "primary": "#00271a", "surface-bright": "#f3fcef", "on-surface": "#161d16", "on-tertiary": "#ffffff", "tertiary-fixed": "#c8f169", "primary-fixed": "#c1ecd6", "secondary-fixed": "#a6f3c7", "on-primary-fixed-variant": "#274e3e", "surface": "#f3fcef", "tertiary": "#192500", "on-primary": "#ffffff", "secondary": "#1d6b49", "on-error": "#ffffff", "inverse-surface": "#2a322a", "inverse-on-surface": "#eaf3e7", "surface-container-high": "#e2ebde", "surface-tint": "#3f6655", "outline-variant": "#c1c8c2", "on-secondary-container": "#25714e", "on-error-container": "#93000a", "primary-fixed-dim": "#a6d0bb", "on-background": "#161d16", "on-primary-fixed": "#002115", "surface-variant": "#dce5d9", "surface-container-low": "#edf6e9", "secondary-container": "#a6f3c7", "primary-container": "#153d2e", "on-tertiary-container": "#87ac2b", "tertiary-fixed-dim": "#add450", "outline": "#717974", "on-tertiary-fixed-variant": "#394d00", "error": "#ba1a1a", "on-secondary-fixed": "#002112", "on-secondary": "#ffffff", "surface-container-lowest": "#ffffff", "tertiary-container": "#2b3c00", "on-tertiary-fixed": "#151f00", "on-surface-variant": "#414844", "background": "#f3fcef" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin-mobile": "1rem", "margin": "3rem", "gutter": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "gutter-mobile": "1rem" }, fontFamily: { "body-lg": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "label-md": ["JetBrains Mono"], "body-md": ["Plus Jakarta Sans"], "label-sm": ["JetBrains Mono"], "headline-sm": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] }, fontSize: { "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-xl-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }], "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "500" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface min-h-screen flex flex-col antialiased selection:bg-tertiary-fixed selection:text-tertiary"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(21,61,46,0.05)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="FOODLOOP Circular Loop Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1UPdGRzAE0GboojQekHoE_sHez2A9-qcYPtwYXN7GvN3PhuD36igMiT1bMcvEXD5GL7R2SYEb9rUZREEKWQXp0VaqNlOorjV84T873tFTA1fIFTKOk2R3DEkZSzcTWiiMQGPtxKl3IvlQIXySKGhAu5cPIyXxH1yz2A8V2U19mDvq21RRj_FLs3AfIu0IQ_JQv1h7b5WFx4WQpdv5NS9yfUCdMzfkAsZ_Tmv8NST9au5QhkKSE02GM4Has"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none truncate">FOODLOOP</span><div class="flex items-center gap-1 mt-0.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-secondary truncate">Nemotron AI Active</span></div></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-tertiary-fixed ring-2 ring-surface"></span></button><div class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKHCyDDoDrZ-m_ePjO9jiPJK96-bsY4eeim7MTdNyVILVifuju5Rb1dJZlPToCMsE-AZqzyRiRVK4BNFD9Paaqq941wy6c08ooAkyved9PQHazF3wIEW-gFE9A2cAJU60NkR62mcS9IpOnzPUStuyEfbFQPuGbPuq7gOG6z5tZm7vctSnFM88gwk0f6vs9cijCOOx1k8l9mlc_6xsi5MTd1fql8fitGtAhAKQ1UiBvQjOAeXUG3rCi"/></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<div class="px-margin-mobile pt-space-md">
+<!-- Progress Indicator Bar & Stepper -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-sm mb-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Surplus Redistribution</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Step 1 of 2</span>
+</div>
+<div class="flex items-baseline justify-between mb-space-sm">
+<h1 class="font-headline-sm text-headline-sm text-primary">Publish Surplus Food</h1>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/40 px-2.5 py-0.5 rounded-full font-semibold">Logistics Active</span>
+</div>
+<!-- Segmented Bar -->
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden flex gap-1">
+<div class="h-full w-1/2 bg-primary-container rounded-full"></div>
+<div class="h-full w-1/2 bg-surface-variant rounded-full"></div>
+</div>
+<div class="flex justify-between mt-1.5">
+<span class="font-label-sm text-label-sm text-primary font-medium">1. Food &amp; Logistics</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2. Courier Match</span>
+</div>
+</div>
+<!-- Live Impact Micro-Banner -->
+<div class="bg-primary-container text-on-primary p-space-md rounded-xl shadow-md mb-space-md relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-28 h-28 bg-tertiary-fixed/15 rounded-full blur-xl pointer-events-none"></div>
+<div class="relative z-10 flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-on-primary-container font-semibold">Immediate ESG Forecast</span>
+</div>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-headline-md text-headline-md text-surface font-bold" id="impact-meals">~120</span>
+<span class="font-body-sm text-body-sm text-on-primary-container">nourishing meals saved</span>
+</div>
+<p class="font-label-sm text-label-sm text-primary-fixed-dim">Offsets approximately 96.4 kg CO2e greenhouse footprint</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface/10 flex items-center justify-center flex-shrink-0 text-tertiary-fixed">
+<span class="material-symbols-outlined text-[24px]">electric_bolt</span>
+</div>
+</div>
+</div>
+<!-- Section 1: Category Selection Carousel/Tiles -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-headline-sm text-headline-sm text-primary text-[17px]">1. Category Selection</label>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Select 1</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5" id="category-selector">
+<!-- Hot Meals (Selected) -->
+<button class="category-btn active col-span-2 flex items-center justify-between p-3.5 rounded-lg bg-primary-container text-on-primary shadow-sm text-left transition-all" type="button">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-md bg-tertiary-fixed text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">soup_kitchen</span>
+</div>
+<div>
+<div class="font-body-md text-body-md font-semibold text-surface">Hot Cooked Meals</div>
+<div class="font-label-sm text-label-sm text-primary-fixed-dim">Buffets, roasts, warm entrees</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[22px] text-tertiary-fixed check-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+<!-- Bakery & Pastries -->
+<button class="category-btn flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container transition-all text-left" type="button">
+<div class="w-8 h-8 rounded-md bg-surface-container-highest text-secondary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">bakery_dining</span>
+</div>
+<div class="min-w-0">
+<div class="font-body-sm text-body-sm font-semibold truncate">Bakery &amp; Treats</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Artisan bread, pies</div>
+</div>
+</button>
+<!-- Fresh Produce -->
+<button class="category-btn flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container transition-all text-left" type="button">
+<div class="w-8 h-8 rounded-md bg-surface-container-highest text-secondary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">nutrition</span>
+</div>
+<div class="min-w-0">
+<div class="font-body-sm text-body-sm font-semibold truncate">Fresh Produce</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Fruit boxes, greens</div>
+</div>
+</button>
+<!-- Dairy & Chilled -->
+<button class="category-btn flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container transition-all text-left" type="button">
+<div class="w-8 h-8 rounded-md bg-surface-container-highest text-secondary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">kitchen</span>
+</div>
+<div class="min-w-0">
+<div class="font-body-sm text-body-sm font-semibold truncate">Dairy &amp; Chilled</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Yogurt, milk, cold cuts</div>
+</div>
+</button>
+<!-- Packaged / Pantry -->
+<button class="category-btn flex items-center gap-2.5 p-3 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container transition-all text-left" type="button">
+<div class="w-8 h-8 rounded-md bg-surface-container-highest text-secondary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<div class="min-w-0">
+<div class="font-body-sm text-body-sm font-semibold truncate">Pantry / Dry</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Sealed, non-perishable</div>
+</div>
+</button>
+</div>
+</div>
+<!-- Section 2: Food Description & Weight -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<label class="font-headline-sm text-headline-sm text-primary text-[17px]">2. Food Specifics</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Verified weight</span>
+</div>
+<!-- Item Photo Card with contextual AI prompt -->
+<div class="relative w-full h-36 rounded-lg overflow-hidden shadow-inner group">
+<img class="w-full h-full object-cover" data-alt="High quality overhead photograph of freshly prepared banquet catering trays containing seasoned roasted lemon herb chicken and steamed organic quinoa bowls with roasted vegetables, displayed cleanly under warm commercial kitchen LED lighting with stainless steel hotel pans." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkwPD8M_7GUjycPVBNu3SKw2WtzT6vhSw6AuaB0ZtB0_IMw7eD91xOn0OyvZaEeLHrTEThJKhpibX9vLfc0pZMt0Dn-loFV6oYjlXEO5HJjAvrtm6U6u2ZGgsmPmNZqONOBqQdmDKmWvSaRolleKuvDabPqcEtFjpUXqVo5uTA9konGkKWB7I2WYWEsUkpNvNem-WNj6Az9L_ClUVRh6FFK2rt8dI95nuwWI4xZo5aWMfFPS0ut6U8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent flex items-end justify-between p-3">
+<span class="font-label-sm text-label-sm text-surface bg-surface-container-lowest/20 backdrop-blur-md px-2 py-1 rounded">Camera OCR Verified</span>
+<button class="flex items-center gap-1 bg-surface text-primary px-2.5 py-1 rounded-md text-label-sm font-label-sm font-semibold shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">photo_camera</span>
+<span>Retake</span>
+</button>
+</div>
+</div>
+<!-- Food Name Input -->
+<div>
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant block mb-1" for="foodName">Surplus Description</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-primary font-body-md text-body-md px-3.5 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" id="foodName" type="text" value="Prepared Catering Buffet (Roasted Chicken &amp; Quinoa Bowls)"/>
+</div>
+</div>
+<!-- Quantity, Toggle & Servings Counter -->
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Net Quantity</label>
+<div class="flex bg-surface-container-highest p-0.5 rounded-full text-label-sm font-label-sm">
+<button class="px-2 py-0.5 rounded-full bg-primary text-on-primary font-semibold" type="button">KG</button>
+<button class="px-2 py-0.5 rounded-full text-on-surface-variant" type="button">Trays</button>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<button class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary active:scale-95 transition-transform" onclick="adjustQty(-5)" type="button">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="font-headline-md text-headline-md text-primary font-bold" id="qty-val">45</span>
+<button class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary active:scale-95 transition-transform" onclick="adjustQty(5)" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg flex flex-col justify-between">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Beneficiary Portions</label>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md text-secondary font-bold" id="servings-val">120</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Servings</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary-container bg-primary-container px-2 py-0.5 rounded text-center">Calculated for Adults</span>
+</div>
+</div>
+</div>
+<!-- Section 3: Time Constraints & Urgent Logistics -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<label class="font-headline-sm text-headline-sm text-primary text-[17px]">3. Time Windows &amp; Location</label>
+<span class="font-label-sm text-label-sm text-error font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span> Urgent Window
+        </span>
+</div>
+<!-- Prepared & Pickup Alert Banner -->
+<div class="bg-surface-container-high rounded-lg p-3 flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">schedule</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Prepared Timestamp:</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-primary bg-surface-container-lowest px-2 py-1 rounded">Today, 11:00 AM</span>
+</div>
+<div class="flex items-center justify-between bg-error-container/30 p-2 rounded-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-error">timer</span>
+<span class="font-body-sm text-body-sm font-semibold text-error">Strict Pickup Deadline:</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md font-bold text-error block">Today, 2:30 PM</span>
+<span class="font-label-sm text-label-sm text-error/80">3h 14m remaining</span>
+</div>
+</div>
+</div>
+<!-- Pickup Address & Facility Map Reference -->
+<div>
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant block mb-1">Pickup Dock &amp; Instructions</label>
+<div class="flex items-center gap-2 bg-surface-container-low p-3 rounded-lg">
+<span class="material-symbols-outlined text-[22px] text-secondary flex-shrink-0">fmd_good</span>
+<div class="min-w-0 flex-1">
+<input class="w-full bg-transparent font-body-sm text-body-sm font-semibold text-primary truncate focus:outline-none" type="text" value="Grand Ballroom Loading Bay 3, 100 Waterfront Way"/>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Enter ramp on Harbor Blvd, buzz security at Gate B</p>
+</div>
+</div>
+</div>
+<!-- Map Visual Module using data-location -->
+<div class="w-full h-24 rounded-lg bg-cover bg-center overflow-hidden relative shadow-sm" data-location="100 Waterfront Way, Seattle, WA" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWW2FXkB1_S5h9qqgJSU_06mxhK0ke0EAW-2U7oSVBBsoflZ94gHbXIPeH4gZWnWcrSmjAPjrWdgoca1yOKCaVOb9Jdz0VGDOV7m8OrhOoOBHqnHK7XGcRhMD8xieYAi3uAhNcT1GtDII9xck95WJf_6iEa7s1ksYnzk48zlkbEby5ulggv1ySATuuZhBUQHDwD7Mm35Tuho0D5GPVKCCM2E9TgXRIpDbClbZxPqvP2Q068EKY02zA')">
+<div class="absolute inset-0 bg-primary/20 backdrop-blur-[1px] flex items-center justify-between p-3">
+<div class="bg-surface/90 px-2 py-1 rounded shadow text-on-surface font-label-sm text-label-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">navigation</span>
+<span>Commercial Access Validated</span>
+</div>
+<span class="font-label-sm text-label-sm text-surface font-semibold bg-primary/80 px-2 py-0.5 rounded">Bay 3 Reserved</span>
+</div>
+</div>
+</div>
+<!-- Section 4: Dietary & Allergen Declarations -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<label class="font-headline-sm text-headline-sm text-primary text-[17px]">4. Dietary &amp; Allergens</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">AI Smart Tagged</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">Select all that apply to ensure safe volunteer handling and recipient safety.</p>
+<div class="flex flex-wrap gap-2" id="allergen-pills">
+<!-- Halal (Selected Positive) -->
+<button class="pill-badge flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold shadow-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Halal Certified</span>
+</button>
+<!-- Nut-Free (Selected Positive) -->
+<button class="pill-badge flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold shadow-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Nut-Free Facility</span>
+</button>
+<!-- Gluten Present (Cautionary Tag) -->
+<button class="pill-badge flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-error-container/60 text-on-error-container font-label-sm text-label-sm font-semibold" type="button">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>Gluten Present</span>
+</button>
+<!-- Dairy Present (Cautionary Tag) -->
+<button class="pill-badge flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-error-container/60 text-on-error-container font-label-sm text-label-sm font-semibold" type="button">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>Dairy Present</span>
+</button>
+<!-- Vegetarian Option -->
+<button class="pill-badge flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-medium hover:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">spa</span>
+<span>Vegetarian Trays Included</span>
+</button>
+<!-- Kosher (Unselected) -->
+<button class="pill-badge flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-medium hover:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Kosher</span>
+</button>
+</div>
+</div>
+<!-- Section 5: Storage & Safety Conditions -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<label class="font-headline-sm text-headline-sm text-primary text-[17px]">5. Storage &amp; Safety Protocols</label>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">HACCP Tier 1</span>
+</div>
+<!-- Storage Spec Strip -->
+<div class="flex items-center justify-between bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-md bg-tertiary-fixed text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">thermostat</span>
+</div>
+<div>
+<div class="font-body-sm text-body-sm font-semibold text-primary">Insulated Hot Box (&gt;60°C)</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Active thermal containment required</div>
+</div>
+</div>
+<button class="text-secondary font-label-sm text-label-sm font-semibold px-2 py-1 bg-surface-container-highest rounded" type="button">Edit Temp</button>
+</div>
+<!-- Food Quality Inspection Photo Reference -->
+<div class="relative w-full h-28 rounded-lg overflow-hidden shadow-inner">
+<img class="w-full h-full object-cover" data-alt="A commercial kitchen prep table featuring a digital food thermometer reading sixty-four degrees Celsius inserted into a prepared catering container, clean metallic background with health inspection checklist visible." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL_z4DG2nsaZ4TsPsvfczr09Ncu6dEf0Pw6cJ7EzbM6LSBWB3TOAg79Xnq34MC-vNv79uDCNWAvv5PkixM7wEqpu3Q3SysTomtBZHaotHQtkH3lhanvdoRPBZNvrLJQ8kqeU-r_C-JUmqGfNvHu9vtpiJnPFLqTYuXABJhxAM1mrhzBHK8vW35ykTlW-ZT0Hx6KeNdSCQJyPYJzeTE2h05QZbKqHF6fJVKfSs6l9PxXWD0mdg33LfV"/>
+<div class="absolute inset-0 bg-primary/40 flex items-center justify-between p-3">
+<span class="font-label-sm text-label-sm text-surface font-medium bg-primary/70 px-2 py-1 rounded">Telemetry Log: 64.2°C Validated</span>
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed">verified</span>
+</div>
+</div>
+<!-- Compliance Checkbox -->
+<div class="flex items-start gap-3 bg-surface-container-high/60 p-3 rounded-lg">
+<div class="flex items-center h-5 mt-0.5">
+<input checked="" class="w-5 h-5 rounded accent-primary text-tertiary-fixed focus:ring-0 cursor-pointer" id="hygiene-cert" type="checkbox"/>
+</div>
+<label class="font-body-sm text-body-sm text-on-surface leading-snug cursor-pointer select-none" for="hygiene-cert">
+          I certify this surplus food was safely handled under state health and hygiene regulations, maintained at proper temperature, and has not been contaminated.
+        </label>
+</div>
+</div>
+<!-- Section 6: Contact Person Information -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm mb-space-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-headline-sm text-headline-sm text-primary text-[17px]">6. Point of Contact</label>
+<button class="text-secondary font-label-sm text-label-sm font-semibold" type="button">Switch Account</button>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low p-3 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-primary-container text-surface flex items-center justify-center font-headline-sm text-headline-sm font-bold">
+            MV
+          </div>
+<div>
+<div class="font-body-md text-body-md font-semibold text-primary">Marcus Vance</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Head of Catering • <span class="font-label-sm text-label-sm">+1 (555) 382-9102</span></div>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center text-primary" type="button">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+</button>
+</div>
+</div>
+<!-- Bottom Sticky-Like Mobile Summary Actions -->
+<div class="bg-surface-container-highest p-space-md rounded-xl shadow-md flex flex-col gap-3">
+<div class="flex items-center justify-between text-on-surface">
+<div>
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant block">Redistribution Summary</span>
+<span class="font-body-md text-body-md font-bold text-primary">45 kg • Prepared Buffet • 120 Servings</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Priority 1 Match</span>
+<span class="font-label-md text-label-md block text-primary font-bold">Free Redistribution</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-2 pt-1">
+<button class="w-full py-3.5 px-4 bg-tertiary-fixed text-tertiary font-headline-sm text-headline-sm font-bold rounded-lg shadow-md hover:bg-tertiary-fixed-dim active:scale-[0.99] transition-all flex items-center justify-center gap-2" id="publish-btn" onclick="triggerPublishSuccess()" type="button">
+<span class="material-symbols-outlined text-[22px]">send</span>
+<span>Publish Donation to FOODLOOP</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="w-full py-2.5 px-3 bg-surface text-primary font-body-sm text-body-sm font-semibold rounded-lg hover:bg-surface-container transition-colors text-center" type="button">
+            Save as Draft
+          </button>
+<button class="w-full py-2.5 px-3 bg-surface text-on-surface-variant font-body-sm text-body-sm font-semibold rounded-lg hover:bg-surface-container transition-colors text-center" type="button">
+            Preview Listing
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  let currentKg = 45;
+  const ratio = 120 / 45;
+
+  function adjustQty(amount) {
+    currentKg = Math.max(5, currentKg + amount);
+    const servings = Math.round(currentKg * ratio);
+    const co2 = (currentKg * 2.14).toFixed(1);
+    
+    document.getElementById('qty-val').innerText = currentKg;
+    document.getElementById('servings-val').innerText = servings;
+    document.getElementById('impact-meals').innerText = '~' + servings;
+  }
+
+  // Interactive Category Selection
+  const catButtons = document.querySelectorAll('.category-btn');
+  catButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      catButtons.forEach(b => {
+        b.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+        b.classList.add('bg-surface-container-low', 'text-on-surface');
+        const iconWrap = b.querySelector('.w-8, .w-10');
+        if (iconWrap) {
+          iconWrap.classList.remove('bg-tertiary-fixed', 'text-primary');
+          iconWrap.classList.add('bg-surface-container-highest', 'text-secondary');
+        }
+        const check = b.querySelector('.check-icon');
+        if (check) check.remove();
+      });
+
+      this.classList.remove('bg-surface-container-low', 'text-on-surface');
+      this.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+      const iconWrap = this.querySelector('.w-8, .w-10');
+      if (iconWrap) {
+        iconWrap.classList.remove('bg-surface-container-highest', 'text-secondary');
+        iconWrap.classList.add('bg-tertiary-fixed', 'text-primary');
+      }
+      
+      const checkSpan = document.createElement('span');
+      checkSpan.className = 'material-symbols-outlined text-[20px] text-tertiary-fixed check-icon ml-auto';
+      checkSpan.style = "font-variation-settings: 'FILL' 1;";
+      checkSpan.innerText = 'check_circle';
+      this.appendChild(checkSpan);
+    });
+  });
+
+  // Allergen Pills toggle
+  const pills = document.querySelectorAll('#allergen-pills .pill-badge');
+  pills.forEach(pill => {
+    pill.addEventListener('click', function() {
+      this.classList.toggle('opacity-70');
+      this.classList.toggle('scale-95');
+    });
+  });
+
+  function triggerPublishSuccess() {
+    const btn = document.getElementById('publish-btn');
+    btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[22px]">progress_activity</span><span>Broadcasting to Couriers...</span>`;
+    btn.classList.add('opacity-90');
+    
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[22px]">check_circle</span><span>Donation Published! Match Pending</span>`;
+      btn.classList.remove('bg-tertiary-fixed', 'text-tertiary');
+      btn.classList.add('bg-secondary', 'text-on-secondary');
+    }, 1200);
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(21,61,46,0.06)]" data-active-classes="text-primary-container font-headline-sm"><div class="grid grid-cols-5 items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center h-full min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-primary transition-colors" data-path="operations-dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-sm text-label-sm mt-0.5">Dashboard</span></a><a aria-current="page" class="flex flex-col items-center justify-center h-full min-w-[44px] min-h-[44px] transition-colors text-primary-container font-headline-sm" data-path="create-donation" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="font-label-sm text-label-sm mt-0.5">Donate</span></a><a class="flex flex-col items-center justify-center h-full min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-primary transition-colors" data-path="recipient-matching" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label-sm text-label-sm mt-0.5">Matching</span></a><a class="flex flex-col items-center justify-center h-full min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-primary transition-colors" data-path="ai-coordination-planner" href="#"><span class="material-symbols-outlined text-[20px]">auto_awesome</span><span class="font-label-sm text-label-sm mt-0.5">AI Plan</span></a><a class="flex flex-col items-center justify-center h-full min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-primary transition-colors" data-path="impact-analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-label-sm text-label-sm mt-0.5">Impact</span></a></div></nav></body></html>

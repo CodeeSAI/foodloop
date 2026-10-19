@@ -1,0 +1,590 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-forest: #123C2D;
+    --color-forest-dark: #0B2A20;
+    --color-forest-deep: #051811;
+    --color-ivory: #F5F5EC;
+    --color-lime: #C8F169;
+    --color-pale-sage: #DDE8D8;
+    --color-emerald: #237653;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #061C14;
+    color: #F5F5EC;
+    overflow-x: hidden;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+    background-image: 
+      radial-gradient(ellipse at 15% 10%, rgba(35, 118, 83, 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 25%, rgba(200, 241, 105, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(18, 60, 45, 0.45) 0%, transparent 65%);
+    background-attachment: fixed;
+    background-size: cover;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(6, 28, 20, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(35, 118, 83, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 241, 105, 0.6);
+}
+
+/* =========================================================================
+   PREMIUM TYPOGRAPHY DESIGN SYSTEM (PLUS JAKARTA SANS & JETBRAINS MONO)
+   ========================================================================= */
+
+.font-ui {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-tech {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Page Titles: 30–36px desktop, responsive on mobile, weight 700–800, tight letter-spacing */
+.text-page-title {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.625rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+}
+@media (min-width: 768px) {
+  .text-page-title {
+    font-size: 2.125rem;
+    line-height: 1.18;
+  }
+}
+
+/* Section Headings: 20–24px, weight 700 */
+.text-section-heading {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #FFFFFF;
+}
+@media (min-width: 768px) {
+  .text-section-heading {
+    font-size: 1.45rem;
+  }
+}
+
+/* Card Titles: 16–19px, weight 700, high contrast */
+.text-card-title {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+/* Subheadings: 14–16px, weight 500–600 */
+.text-subheading {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+/* Body Text: 14–15px, comfortable leading, clear readability */
+.text-body-default {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(221, 232, 216, 0.9);
+}
+
+/* Supporting Text: 12–13px, muted but legible */
+.text-supporting {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.78125rem;
+  line-height: 1.45;
+  font-weight: 400;
+  color: rgba(221, 232, 216, 0.72);
+}
+
+/* Technical Labels: 11–12px JetBrains Mono, uppercase, restrained letter-spacing */
+.text-tech-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #C8F169;
+}
+
+/* Technical Data / Code: 12–13px JetBrains Mono */
+.text-tech-data {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.78125rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Large Hero Metrics: 32–42px, bold, tight alignment */
+.text-metric-value {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+}
+@media (min-width: 768px) {
+  .text-metric-value {
+    font-size: 2.375rem;
+  }
+}
+
+.text-metric-unit {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #C8F169;
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================================
+   CINEMATIC GLASSMORPHISM TOKENS (HIGH-END DARK SUSTAINABILITY-TECH)
+   ========================================================================= */
+
+/* Main Translucent Glass Panels */
+.glass-panel {
+  background: rgba(11, 42, 32, 0.76);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 241, 105, 0.15);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 40px -8px rgba(0, 16, 11, 0.6);
+}
+
+.glass-panel-dark {
+  background: rgba(6, 26, 19, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(200, 241, 105, 0.22);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.16),
+    0 20px 48px -10px rgba(0, 12, 8, 0.75);
+}
+
+/* Interactive Glass Cards with Hover Lift & Sheen */
+.glass-card {
+  background: rgba(15, 52, 40, 0.62);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 24px -4px rgba(0, 16, 11, 0.45);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.24s ease,
+              background-color 0.24s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  background: rgba(18, 62, 48, 0.75);
+  border-color: rgba(200, 241, 105, 0.35);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    0 18px 44px -8px rgba(0, 16, 11, 0.65),
+    0 0 24px -6px rgba(200, 241, 105, 0.15);
+}
+
+.glass-card:hover::after {
+  left: 100%;
+}
+
+/* Glass Nested Items & Rows */
+.glass-subcard {
+  background: rgba(10, 36, 27, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.glass-subcard:hover {
+  background: rgba(13, 44, 34, 0.82);
+  border-color: rgba(200, 241, 105, 0.25);
+}
+
+/* Glass Dropdowns, Popovers & Modals - High Contrast Opaque Forest Glass */
+.glass-dropdown {
+  background-color: #072217 !important;
+  background: #072217 !important;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(200, 241, 105, 0.38) !important;
+  box-shadow: 
+    0 24px 60px -8px rgba(0, 0, 0, 0.95),
+    0 0 24px -2px rgba(200, 241, 105, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================================
+   FOODLOOP DESIGN SYSTEM — GLOBAL BUTTON DESIGN TOKENS
+   Strict WCAG AA contrast, consistent motion, feedback & states
+   ========================================================================= */
+
+/* Primary Button: FOODLOOP Lime background (#C8F169) with Deep Forest text/icons (#123C2D) */
+.btn-primary,
+.btn-glow-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #C8F169 !important;
+  color: #123C2D !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 700 !important;
+  border: 1px solid rgba(18, 60, 45, 0.18);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px -2px rgba(200, 241, 105, 0.4), 0 2px 6px -1px rgba(0, 20, 14, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+/* Force deep forest text/icon color on all child elements in primary buttons */
+.btn-primary *,
+.btn-glow-primary * {
+  color: #123C2D !important;
+}
+
+/* Hover: slightly darker lime (#B8E356), restrained glow, 1-2px lift, NEVER white! */
+.btn-primary:hover:not(:disabled),
+.btn-glow-primary:hover:not(:disabled) {
+  background-color: #B8E356 !important;
+  color: #0E2E23 !important;
+  box-shadow: 0 0 24px -2px rgba(200, 241, 105, 0.6), 0 8px 20px -4px rgba(0, 20, 14, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover:not(:disabled) *,
+.btn-glow-primary:hover:not(:disabled) * {
+  color: #0E2E23 !important;
+}
+
+/* Active: return to original position with clear pressed feedback */
+.btn-primary:active:not(:disabled),
+.btn-glow-primary:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 2px 8px -1px rgba(200, 241, 105, 0.3);
+}
+
+/* Focus: visible keyboard-accessible focus ring */
+.btn-primary:focus-visible,
+.btn-glow-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #061C14, 0 0 0 5px #C8F169;
+}
+
+/* Secondary Button: Dark forest-green glass surfaces with readable pale-sage/white text */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(18, 60, 45, 0.65) !important;
+  color: #FFFFFF !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-secondary * {
+  color: #FFFFFF !important;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(27, 79, 61, 0.85) !important;
+  border-color: rgba(200, 241, 105, 0.4);
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+}
+
+.btn-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #061C14, 0 0 0 5px rgba(200, 241, 105, 0.7);
+}
+
+/* Outline & Ghost Button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent !important;
+  color: #DDE8D8 !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-ghost * {
+  color: inherit !important;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-ghost:hover:not(:disabled) * {
+  color: #FFFFFF !important;
+}
+
+.btn-ghost:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14) !important;
+  transform: translateY(0px) scale(0.98);
+}
+
+.btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #061C14, 0 0 0 5px rgba(200, 241, 105, 0.7);
+}
+
+/* Destructive / Alert Button */
+.btn-destructive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(186, 26, 26, 0.25) !important;
+  color: #FFA49E !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-destructive * {
+  color: inherit !important;
+}
+
+.btn-destructive:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.85) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(239, 68, 68, 0.9);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-destructive:hover:not(:disabled) * {
+  color: #FFFFFF !important;
+}
+
+.btn-destructive:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+}
+
+.btn-destructive:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #061C14, 0 0 0 5px #EF4444;
+}
+
+/* Emerald Accent Button */
+.btn-emerald,
+.btn-glow-emerald {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #237653 !important;
+  color: #FFFFFF !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-weight: 700 !important;
+  border: 1px solid rgba(40, 116, 81, 0.6);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px -2px rgba(35, 118, 83, 0.4);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-emerald *,
+.btn-glow-emerald * {
+  color: #FFFFFF !important;
+}
+
+.btn-emerald:hover:not(:disabled),
+.btn-glow-emerald:hover:not(:disabled) {
+  background-color: #2D8B62 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 22px -2px rgba(35, 118, 83, 0.6), 0 8px 24px -4px rgba(0, 16, 11, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-emerald:active:not(:disabled),
+.btn-glow-emerald:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+}
+
+.btn-emerald:focus-visible,
+.btn-glow-emerald:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #061C14, 0 0 0 5px rgba(35, 118, 83, 0.8);
+}
+
+/* Global Disabled & Loading States */
+button:disabled,
+.btn-primary:disabled,
+.btn-glow-primary:disabled,
+.btn-secondary:disabled,
+.btn-ghost:disabled,
+.btn-destructive:disabled,
+.btn-emerald:disabled,
+.btn-glow-emerald:disabled {
+  opacity: 0.48 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Ambient Radial Glow Helpers */
+.ambient-glow-forest {
+  background: radial-gradient(circle at 50% 0%, rgba(35, 118, 83, 0.3) 0%, transparent 70%);
+}
+
+.ambient-glow-lime {
+  background: radial-gradient(circle at 80% 20%, rgba(200, 241, 105, 0.2) 0%, transparent 60%);
+}
+
+/* Motion & View Transitions */
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-transition {
+  animation: viewFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 14px -1px rgba(200, 241, 105, 0.5);
+  }
+  50% {
+    opacity: 0.65;
+    box-shadow: 0 0 26px 4px rgba(200, 241, 105, 0.85);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .glass-card:hover, .btn-glow-primary:hover, .btn-glow-emerald:hover {
+    transform: none !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* High Contrast Mode for Accessibility */
+.high-contrast-mode {
+  --tw-border-opacity: 0.45;
+}
+.high-contrast-mode .border-\[\#1E4D3B\] {
+  border-color: rgba(200, 241, 105, 0.45) !important;
+}
+.high-contrast-mode .border-\[\#174333\] {
+  border-color: rgba(200, 241, 105, 0.35) !important;
+}
+.high-contrast-mode .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
