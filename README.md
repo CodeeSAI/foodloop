@@ -252,7 +252,7 @@ These are potential directions, not claims that the features are already impleme
 
 <div align="center">
 
-**Made by Team DuoFlash · R Sai Ganesh**
+**Made by Team DuoFlash**
 
 Built to explore how AI-assisted coordination and explicit safety constraints can help make surplus-food redistribution workflows easier to manage.
 
