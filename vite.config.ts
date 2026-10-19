@@ -4,7 +4,7 @@ import {
   resolveAiConfig,
   getAiStatusResponse,
   handleAiInference,
-} from './api/aiLogic';
+} from './api/ai';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');

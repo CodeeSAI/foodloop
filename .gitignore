@@ -11,8 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-scratch/
-
 
 # Editor directories and files
 .vscode/*
@@ -25,9 +23,6 @@ scratch/
 *.sln
 *.sw?
 
-# Vercel
-.vercel
-
 # Environment & Secrets (NEVER COMMIT API KEYS)
 .env
 .env.*
@@ -35,4 +30,3 @@ scratch/
 .env.production
 .env.development
 !.env.example
-

@@ -8,7 +8,7 @@ import {
   validateAndReconcileModelOutput,
   extractJsonPayload,
   generateDeterministicReasoning,
-} from '../api/aiLogic';
+} from '../api/ai';
 import { evaluateRecipientConstraints } from '../src/utils/constraintEngine';
 import { INITIAL_DONATIONS, INITIAL_RECIPIENTS } from '../src/data/seedData';
 import { Donation, Recipient } from '../src/types';
